@@ -10,6 +10,8 @@ for($i=1; $i<=6; $i++) {
 	$needed[]="temp{$i}_min";
 	$needed[]="temp{$i}_max";
 	$needed[]="temp{$i}_lbl";
+}
+for($i=1; $i<=4; $i++) {
 	$needed[]="tog{$i}";
 	$needed[]="tog{$i}_lbl";
 }

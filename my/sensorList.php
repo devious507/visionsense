@@ -74,7 +74,7 @@ if(isset($_GET['mac'])) {
 	print "<tr><td colspan=\"16\"><a href=\"sensorList.php\">Full List</a> || <a href=\"sensorHistory.php?mac={$mac}&lines=10\">History</a> || <a href=\"editBuilding.php?mac={$mac}\">Edit</a></td></tr>\n";
 	print "<tr><td colspan=\"16\">RRD Graphs go here</td></tr>\n";
 }
-print "<tr><td colspan=\"16\"><a href=\"logout.php\">Logout</a></td></tr>\n";
+print "<tr><td colspan=\"16\"><a href=\"manageGroup.php\">My Groups</a> || <a href=\"logout.php\">Logout</a></td></tr>\n";
 print "</table>\n";
 print "</body></html>\n";
 

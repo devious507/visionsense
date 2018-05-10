@@ -11,5 +11,13 @@ $sql="INSERT INTO users (username,password,email) VALUES ('{$username}','$passwo
 $db=connectDB();
 $res=$db->query($sql);
 checkDBError($res,$sql);
+$sql="SELECT userid FROM users WHERE username='{$username}'";
+$res=$db->query($sql);
+checkDBError($res,$sql);
+$row=$res->fetchRow();
+$userID = $row[0];
+$sql="INSERT INTO sensor_groups (owner_id,group_name,immutable) VALUES ({$userID},' Default',true)";
+$res=$db->query($sql);
+checkDBError($res,$sql);
 header("Location: userManager.php");
 ?>

@@ -315,7 +315,7 @@ function getBuildingGroupById($mac,$cur) {
 	checkDBError($res);
 	$row = $res->fetchRow(MDB2_FETCHMODE_ASSOC);
 	$ownerID=$row['owner'];
-	$sql="SELECT id,group_name FROM sensor_groups ORDER BY group_name ASC";
+	$sql="SELECT id,group_name FROM sensor_groups WHERE owner_id={$ownerID} ORDER BY group_name ASC";
 	$res=$db->query($sql);
 	checkDBError($res);
 	$rv="<select name=\"sensor_group\">\n";

@@ -5,6 +5,16 @@ require_once("project.php");
 $referer = "http://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME'];
 if(!validateLogin()) {
 	doLoginBox();
+} else {
+	$db =connectDB();
+	$sql="SELECT * FROM sensor_groups WHERE owner_id={$_COOKIE['ownerID']}";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+	if($res->numRows() == 0) {
+$sql="INSERT INTO sensor_groups (owner_id,group_name,immutable) VALUES ({$_COOKIE['ownerID']},' Default',true)";
+		$res=$db->query($sql);
+		checkDBError($res,$sql);
+	}
 }
 
 

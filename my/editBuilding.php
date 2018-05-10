@@ -60,7 +60,7 @@ for($i=1; $i<=6; $i++) {
 	$max=$row['temp'.$i.'_max'];
 	$table.="<tr><td>Temp {$i}</td><td><input type=\"text=\" size=\"{$s}\" name=\"temp{$i}_min\" value=\"{$min}\"></td><td><input type=\"text\" size=\"{$s}\" name=\"temp{$i}_max\" value=\"{$max}\"></td><td><input type=\"text\" size=\"{$ss}\" name=\"temp{$i}_lbl\" value=\"{$lbl}\"></td></tr>\n";
 }
-for($i=1; $i<=6; $i++) {
+for($i=1; $i<=4; $i++) {
 	$lbl="Int. {$i}";
 	$val=$row['tog'.$i];
 	$key='tog'.$i;

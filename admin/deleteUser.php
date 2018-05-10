@@ -17,7 +17,10 @@ if(!isset($_GET['userid'])) {
 }
 if(isset($_GET['confirm']) && ($_GET['confirm'] == 'true')) {
 	$db = connectDB();
-	$sql="UPDATE sensor_setup SET owner=1 WHERE owner='{$id}'";
+	$sql="UPDATE sensor_setup SET owner=1,sensor_group=1 WHERE owner='{$id}'";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+	$sql="DELETE FROM sensor_groups WHERE owner_id={$id}";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
 	$sql="DELETE FROM users WHERE userid={$id}";
