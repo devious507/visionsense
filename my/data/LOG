@@ -1,0 +1,497 @@
+05/10/2018 10:59:43:  mac=0200.0001.0004&water=0&electric=276&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 10:59:43:  UPDATE sensor_current SET water=0, electric=276, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 10:59:43:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 10:59:43:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:276 
+05/10/2018 10:59:43:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 10:59:43:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 10:59:43:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 10:59:43:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 10:59:43:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 10:59:43:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:00:01:  mac=abcd.abcd.abcd&water=1549&electric=478&temp1=115&temp2=154&temp3=71&temp4=116&temp5=110&temp6=96&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:00:01:  UPDATE sensor_current SET water=1549, electric=478, temp1=115, temp2=154, temp3=71, temp4=116, temp5=110, temp6=96, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:00:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:00:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:115:154:71:116:110:96:1549:478 
+05/10/2018 11:03:22:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:03:23:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:04:35:  mac=0200.0001.0004&water=0&electric=272&temp1=73&temp2=68&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:04:35:  UPDATE sensor_current SET water=0, electric=272, temp1=73, temp2=68, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:04:35:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:04:35:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:68:-196:-196:-196:-196:0:272 
+05/10/2018 11:04:36:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:04:36:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:04:36:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:04:36:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:04:36:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:04:36:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:05:01:  mac=abcd.abcd.abcd&water=0&electric=971&temp1=92&temp2=132&temp3=82&temp4=113&temp5=104&temp6=147&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:05:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 11:05:01:  UPDATE sensor_current SET water=0, electric=971, temp1=92, temp2=132, temp3=82, temp4=113, temp5=104, temp6=147, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:05:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:05:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:92:132:82:113:104:147:0:971 
+05/10/2018 11:05:28:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:05:30:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:05:30:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:05:30:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:05:31:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:05:31:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:08:01:  mac=abcd.abcd.abcd&sensor=5&value=0
+05/10/2018 11:08:03:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:08:04:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:08:10:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:08:10:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:09:28:  mac=0200.0001.0004&water=0&electric=247&temp1=73&temp2=68&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:09:28:  UPDATE sensor_current SET water=0, electric=247, temp1=73, temp2=68, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:09:28:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:09:28:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:68:-196:-196:-196:-196:0:247 
+05/10/2018 11:09:29:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:09:29:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:09:29:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:09:29:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:09:29:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:09:29:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:10:01:  mac=abcd.abcd.abcd&water=0&electric=757&temp1=139&temp2=148&temp3=85&temp4=125&temp5=97&temp6=157&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:10:01:  UPDATE sensor_current SET water=0, electric=757, temp1=139, temp2=148, temp3=85, temp4=125, temp5=97, temp6=157, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:10:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:10:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:139:148:85:125:97:157:0:757 
+05/10/2018 11:11:01:  mac=abcd.abcd.abcd&sensor=6&value=0
+05/10/2018 11:13:09:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:13:09:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:13:11:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:13:11:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:13:15:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:13:17:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:14:21:  mac=0200.0001.0004&water=0&electric=215&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:14:21:  UPDATE sensor_current SET water=0, electric=215, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:14:21:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:14:21:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:215 
+05/10/2018 11:14:21:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:14:22:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:14:22:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:14:22:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:14:22:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:14:22:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:15:01:  mac=abcd.abcd.abcd&water=0&electric=236&temp1=125&temp2=123&temp3=77&temp4=136&temp5=109&temp6=144&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:15:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 11:15:01:  UPDATE sensor_current SET water=0, electric=236, temp1=125, temp2=123, temp3=77, temp4=136, temp5=109, temp6=144, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:15:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:15:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:125:123:77:136:109:144:0:236 
+05/10/2018 11:16:15:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:16:15:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:17:01:  mac=abcd.abcd.abcd&sensor=7&value=0
+05/10/2018 11:17:38:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:17:39:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:19:01:  mac=abcd.abcd.abcd&sensor=5&value=0
+05/10/2018 11:19:14:  mac=0200.0001.0004&water=0&electric=231&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:19:14:  UPDATE sensor_current SET water=0, electric=231, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:19:14:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:19:14:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:231 
+05/10/2018 11:19:14:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:19:14:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:19:14:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:19:14:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:19:15:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:19:15:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:20:01:  mac=abcd.abcd.abcd&water=0&electric=983&temp1=159&temp2=93&temp3=70&temp4=134&temp5=122&temp6=154&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:20:01:  UPDATE sensor_current SET water=0, electric=983, temp1=159, temp2=93, temp3=70, temp4=134, temp5=122, temp6=154, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:20:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:20:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:159:93:70:134:122:154:0:983 
+05/10/2018 11:24:06:  mac=0200.0001.0004&water=0&electric=295&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:24:06:  UPDATE sensor_current SET water=0, electric=295, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:24:06:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:24:06:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:295 
+05/10/2018 11:24:07:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:24:07:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:24:07:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:24:07:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:24:07:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:24:07:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:25:01:  mac=abcd.abcd.abcd&water=0&electric=999&temp1=104&temp2=122&temp3=79&temp4=127&temp5=156&temp6=146&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:25:01:  UPDATE sensor_current SET water=0, electric=999, temp1=104, temp2=122, temp3=79, temp4=127, temp5=156, temp6=146, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:25:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:25:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:104:122:79:127:156:146:0:999 
+05/10/2018 11:27:01:  mac=abcd.abcd.abcd&sensor=7&value=0
+05/10/2018 11:28:59:  mac=0200.0001.0004&water=0&electric=311&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:28:59:  UPDATE sensor_current SET water=0, electric=311, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:28:59:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:28:59:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:311 
+05/10/2018 11:28:59:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:29:00:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:29:00:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:29:00:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:29:00:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:29:00:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:29:01:  mac=abcd.abcd.abcd&sensor=5&value=0
+05/10/2018 11:30:01:  mac=abcd.abcd.abcd&water=1628&electric=293&temp1=96&temp2=152&temp3=71&temp4=146&temp5=96&temp6=117&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:30:01:  UPDATE sensor_current SET water=1628, electric=293, temp1=96, temp2=152, temp3=71, temp4=146, temp5=96, temp6=117, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:30:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:30:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:96:152:71:146:96:117:1628:293 
+05/10/2018 11:33:43:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:33:43:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:33:49:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:33:50:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:33:52:  mac=0200.0001.0004&water=0&electric=241&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:33:52:  UPDATE sensor_current SET water=0, electric=241, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:33:52:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:33:52:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:241 
+05/10/2018 11:33:52:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:33:52:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:33:52:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:33:52:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:33:53:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:33:53:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:35:01:  mac=abcd.abcd.abcd&water=0&electric=502&temp1=101&temp2=133&temp3=60&temp4=129&temp5=157&temp6=94&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:35:01:  UPDATE sensor_current SET water=0, electric=502, temp1=101, temp2=133, temp3=60, temp4=129, temp5=157, temp6=94, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:35:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:35:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:101:133:60:129:157:94:0:502 
+05/10/2018 11:37:33:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:37:34:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:37:36:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:37:38:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:38:45:  mac=0200.0001.0004&water=0&electric=264&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:38:45:  UPDATE sensor_current SET water=0, electric=264, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:38:45:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:38:45:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:264 
+05/10/2018 11:38:45:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:38:45:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:38:45:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:38:45:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:38:45:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:38:45:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:39:01:  mac=abcd.abcd.abcd&sensor=5&value=0
+05/10/2018 11:40:01:  mac=abcd.abcd.abcd&water=1513&electric=331&temp1=136&temp2=134&temp3=71&temp4=166&temp5=152&temp6=115&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:40:01:  UPDATE sensor_current SET water=1513, electric=331, temp1=136, temp2=134, temp3=71, temp4=166, temp5=152, temp6=115, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:40:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:40:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:136:134:71:166:152:115:1513:331 
+05/10/2018 11:43:37:  mac=0200.0001.0004&water=0&electric=293&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:43:37:  UPDATE sensor_current SET water=0, electric=293, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:43:37:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:43:37:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:293 
+05/10/2018 11:43:38:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:43:38:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:43:38:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:43:38:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:43:38:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:43:38:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:44:34:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:44:35:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:44:38:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:44:39:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:45:01:  mac=abcd.abcd.abcd&water=0&electric=368&temp1=93&temp2=153&temp3=84&temp4=108&temp5=123&temp6=150&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:45:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 11:45:01:  UPDATE sensor_current SET water=0, electric=368, temp1=93, temp2=153, temp3=84, temp4=108, temp5=123, temp6=150, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:45:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:45:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:93:153:84:108:123:150:0:368 
+05/10/2018 11:46:01:  mac=abcd.abcd.abcd&sensor=6&value=0
+05/10/2018 11:46:50:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:46:51:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:46:51:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:46:52:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:46:54:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:46:54:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:48:30:  mac=0200.0001.0004&water=0&electric=295&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:48:30:  UPDATE sensor_current SET water=0, electric=295, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:48:30:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:48:30:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:295 
+05/10/2018 11:48:31:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:48:31:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:48:31:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:48:31:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:48:31:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:48:31:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:50:01:  mac=abcd.abcd.abcd&water=0&electric=702&temp1=130&temp2=135&temp3=73&temp4=103&temp5=170&temp6=148&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:50:01:  UPDATE sensor_current SET water=0, electric=702, temp1=130, temp2=135, temp3=73, temp4=103, temp5=170, temp6=148, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:50:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:50:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:130:135:73:103:170:148:0:702 
+05/10/2018 11:53:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 11:53:23:  mac=0200.0001.0004&water=0&electric=244&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:53:23:  UPDATE sensor_current SET water=0, electric=244, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:53:23:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:53:23:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:244 
+05/10/2018 11:53:23:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:53:23:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:53:23:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:53:23:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:53:24:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:53:24:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:55:01:  mac=abcd.abcd.abcd&water=0&electric=981&temp1=139&temp2=159&temp3=73&temp4=135&temp5=97&temp6=166&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 11:55:01:  UPDATE sensor_current SET water=0, electric=981, temp1=139, temp2=159, temp3=73, temp4=135, temp5=97, temp6=166, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 11:55:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 11:55:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:139:159:73:135:97:166:0:981 
+05/10/2018 11:58:15:  mac=0200.0001.0004&water=0&electric=235&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 11:58:15:  UPDATE sensor_current SET water=0, electric=235, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 11:58:15:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 11:58:15:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:235 
+05/10/2018 11:58:16:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:58:16:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 11:58:16:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 11:58:16:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 11:58:16:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 11:58:16:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 11:59:01:  mac=abcd.abcd.abcd&sensor=7&value=0
+05/10/2018 11:59:54:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:59:55:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 11:59:55:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 11:59:57:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:00:01:  mac=abcd.abcd.abcd&water=0&electric=491&temp1=167&temp2=109&temp3=71&temp4=165&temp5=113&temp6=147&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:00:01:  UPDATE sensor_current SET water=0, electric=491, temp1=167, temp2=109, temp3=71, temp4=165, temp5=113, temp6=147, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:00:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:00:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:167:109:71:165:113:147:0:491 
+05/10/2018 12:00:04:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:00:05:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:02:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 12:03:08:  mac=0200.0001.0004&water=0&electric=295&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:03:08:  UPDATE sensor_current SET water=0, electric=295, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:03:08:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:03:08:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:295 
+05/10/2018 12:03:09:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:03:09:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:03:09:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:03:09:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:03:09:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:03:09:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:05:01:  mac=abcd.abcd.abcd&water=0&electric=853&temp1=130&temp2=152&temp3=74&temp4=116&temp5=117&temp6=152&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:05:01:  UPDATE sensor_current SET water=0, electric=853, temp1=130, temp2=152, temp3=74, temp4=116, temp5=117, temp6=152, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:05:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:05:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:130:152:74:116:117:152:0:853 
+05/10/2018 12:07:01:  mac=abcd.abcd.abcd&sensor=7&value=0
+05/10/2018 12:08:01:  mac=0200.0001.0004&water=0&electric=317&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:08:01:  UPDATE sensor_current SET water=0, electric=317, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:08:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:08:01:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:317 
+05/10/2018 12:08:01:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:08:01:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:08:02:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:08:02:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:08:02:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:08:02:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:10:01:  mac=abcd.abcd.abcd&water=0&electric=928&temp1=148&temp2=149&temp3=62&temp4=117&temp5=167&temp6=119&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:10:01:  UPDATE sensor_current SET water=0, electric=928, temp1=148, temp2=149, temp3=62, temp4=117, temp5=167, temp6=119, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:10:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:10:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:148:149:62:117:167:119:0:928 
+05/10/2018 12:12:54:  mac=0200.0001.0004&water=0&electric=243&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:12:54:  UPDATE sensor_current SET water=0, electric=243, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:12:54:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:12:54:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:243 
+05/10/2018 12:12:54:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:12:54:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:12:54:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:12:54:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:12:54:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:12:54:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:13:10:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:13:10:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:13:11:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:13:11:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:13:13:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:13:13:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:13:14:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:13:14:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:13:57:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:13:58:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:14:01:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:14:02:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:15:01:  mac=abcd.abcd.abcd&water=0&electric=392&temp1=136&temp2=95&temp3=85&temp4=109&temp5=130&temp6=148&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:15:01:  UPDATE sensor_current SET water=0, electric=392, temp1=136, temp2=95, temp3=85, temp4=109, temp5=130, temp6=148, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:15:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:15:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:136:95:85:109:130:148:0:392 
+05/10/2018 12:15:02:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:15:02:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:17:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 12:17:47:  mac=0200.0001.0004&water=0&electric=240&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:17:47:  UPDATE sensor_current SET water=0, electric=240, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:17:47:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:17:47:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:240 
+05/10/2018 12:17:47:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:17:47:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:17:47:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:17:47:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:17:47:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:17:48:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:20:01:  mac=abcd.abcd.abcd&water=0&electric=220&temp1=148&temp2=120&temp3=70&temp4=144&temp5=122&temp6=169&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:20:01:  UPDATE sensor_current SET water=0, electric=220, temp1=148, temp2=120, temp3=70, temp4=144, temp5=122, temp6=169, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:20:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:20:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:148:120:70:144:122:169:0:220 
+05/10/2018 12:22:39:  mac=0200.0001.0004&water=0&electric=294&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:22:39:  UPDATE sensor_current SET water=0, electric=294, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:22:39:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:22:39:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:294 
+05/10/2018 12:22:40:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:22:40:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:22:40:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:22:40:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:22:40:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:22:40:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:25:01:  mac=abcd.abcd.abcd&water=0&electric=714&temp1=93&temp2=116&temp3=60&temp4=122&temp5=116&temp6=123&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:25:01:  UPDATE sensor_current SET water=0, electric=714, temp1=93, temp2=116, temp3=60, temp4=122, temp5=116, temp6=123, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:25:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:25:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:93:116:60:122:116:123:0:714 
+05/10/2018 12:27:32:  mac=0200.0001.0004&water=0&electric=290&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:27:32:  UPDATE sensor_current SET water=0, electric=290, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:27:32:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:27:32:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:290 
+05/10/2018 12:27:32:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:27:32:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:27:32:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:27:33:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:27:33:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:27:33:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:30:01:  mac=abcd.abcd.abcd&water=0&electric=438&temp1=129&temp2=155&temp3=74&temp4=151&temp5=110&temp6=158&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:30:01:  UPDATE sensor_current SET water=0, electric=438, temp1=129, temp2=155, temp3=74, temp4=151, temp5=110, temp6=158, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:30:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:30:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:129:155:74:151:110:158:0:438 
+05/10/2018 12:32:25:  mac=0200.0001.0004&water=0&electric=239&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:32:25:  UPDATE sensor_current SET water=0, electric=239, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:32:25:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:32:25:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:239 
+05/10/2018 12:32:25:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:32:25:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:32:25:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:32:25:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:32:25:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:32:25:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:35:01:  mac=abcd.abcd.abcd&water=1981&electric=445&temp1=102&temp2=105&temp3=80&temp4=152&temp5=163&temp6=121&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:35:01:  UPDATE sensor_current SET water=1981, electric=445, temp1=102, temp2=105, temp3=80, temp4=152, temp5=163, temp6=121, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:35:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:35:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:102:105:80:152:163:121:1981:445 
+05/10/2018 12:37:17:  mac=0200.0001.0004&water=0&electric=249&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:37:17:  UPDATE sensor_current SET water=0, electric=249, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:37:17:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:37:17:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:249 
+05/10/2018 12:37:17:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:37:18:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:37:18:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:37:18:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:37:18:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:37:18:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:39:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 12:40:01:  mac=abcd.abcd.abcd&water=0&electric=140&temp1=141&temp2=120&temp3=85&temp4=136&temp5=163&temp6=126&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:40:01:  UPDATE sensor_current SET water=0, electric=140, temp1=141, temp2=120, temp3=85, temp4=136, temp5=163, temp6=126, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:40:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:40:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:141:120:85:136:163:126:0:140 
+05/10/2018 12:42:01:  mac=abcd.abcd.abcd&sensor=6&value=0
+05/10/2018 12:42:10:  mac=0200.0001.0004&water=0&electric=293&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:42:10:  UPDATE sensor_current SET water=0, electric=293, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:42:10:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:42:10:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:293 
+05/10/2018 12:42:10:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:42:10:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:42:10:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:42:10:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:42:11:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:42:11:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:45:01:  mac=abcd.abcd.abcd&water=1996&electric=271&temp1=117&temp2=149&temp3=72&temp4=150&temp5=105&temp6=154&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:45:01:  UPDATE sensor_current SET water=1996, electric=271, temp1=117, temp2=149, temp3=72, temp4=150, temp5=105, temp6=154, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:45:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:45:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:117:149:72:150:105:154:1996:271 
+05/10/2018 12:47:02:  mac=0200.0001.0004&water=0&electric=288&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:47:02:  UPDATE sensor_current SET water=0, electric=288, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:47:02:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:47:02:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:288 
+05/10/2018 12:47:03:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:47:03:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:47:03:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:47:03:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:47:03:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:47:03:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:50:01:  mac=abcd.abcd.abcd&water=0&electric=521&temp1=107&temp2=109&temp3=84&temp4=151&temp5=119&temp6=128&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:50:01:  UPDATE sensor_current SET water=0, electric=521, temp1=107, temp2=109, temp3=84, temp4=151, temp5=119, temp6=128, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:50:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:50:01:  mac=abcd.abcd.abcd&sensor=7&value=0
+05/10/2018 12:50:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:107:109:84:151:119:128:0:521 
+05/10/2018 12:51:55:  mac=0200.0001.0004&water=0&electric=238&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:51:55:  UPDATE sensor_current SET water=0, electric=238, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:51:55:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:51:55:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:238 
+05/10/2018 12:51:55:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:51:55:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:51:56:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:51:56:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:51:56:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:51:56:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:52:01:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:52:01:  mac=abcd.abcd.abcd&sensor=8&value=0
+05/10/2018 12:52:02:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:52:05:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:52:07:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:52:07:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:52:08:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:52:16:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:52:16:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:52:18:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 12:52:19:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:54:01:  mac=abcd.abcd.abcd&sensor=7&value=0
+05/10/2018 12:55:01:  mac=abcd.abcd.abcd&water=0&electric=344&temp1=98&temp2=114&temp3=61&temp4=149&temp5=101&temp6=131&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 12:55:01:  UPDATE sensor_current SET water=0, electric=344, temp1=98, temp2=114, temp3=61, temp4=149, temp5=101, temp6=131, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 12:55:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 12:55:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:98:114:61:149:101:131:0:344 
+05/10/2018 12:56:01:  mac=abcd.abcd.abcd&sensor=5&value=0
+05/10/2018 12:56:48:  mac=0200.0001.0004&water=0&electric=239&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 12:56:48:  UPDATE sensor_current SET water=0, electric=239, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 12:56:48:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 12:56:48:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:239 
+05/10/2018 12:56:48:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 12:56:48:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 12:56:49:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 12:56:49:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 12:56:49:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 12:56:49:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 12:58:01:  mac=abcd.abcd.abcd&sensor=7&value=0
+05/10/2018 13:00:01:  mac=abcd.abcd.abcd&water=1962&electric=603&temp1=142&temp2=110&temp3=64&temp4=94&temp5=129&temp6=163&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 13:00:01:  UPDATE sensor_current SET water=1962, electric=603, temp1=142, temp2=110, temp3=64, temp4=94, temp5=129, temp6=163, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 13:00:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 13:00:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:142:110:64:94:129:163:1962:603 
+05/10/2018 13:00:01:  mac=abcd.abcd.abcd&sensor=6&value=0
+05/10/2018 13:01:02:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 13:01:03:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 13:01:03:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 13:01:03:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 13:01:04:  mac=0200.0001.0004&water=0&electric=0&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 13:01:04:  UPDATE sensor_current SET water=0, electric=0, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 13:01:04:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 13:01:04:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:0 
+05/10/2018 13:01:04:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 13:01:04:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 13:01:04:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 13:01:04:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 13:01:05:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 13:01:05:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 13:03:25:  mac=0200.0001.0004&sensor=1&value=1
+05/10/2018 13:03:25:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 13:05:01:  mac=abcd.abcd.abcd&water=0&electric=110&temp1=122&temp2=142&temp3=68&temp4=106&temp5=110&temp6=169&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 13:05:01:  UPDATE sensor_current SET water=0, electric=110, temp1=122, temp2=142, temp3=68, temp4=106, temp5=110, temp6=169, tog1=true, tog2=true, tog3=true, tog4=true, tog5=true, tog6=true, lastcontact=now(), lastip='172.16.0.23' WHERE mac='abcd.abcd.abcd'
+05/10/2018 13:05:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 13:05:01:  /usr/bin/rrdtool update data/rrd/abcd.abcd.abcd.rrd N:122:142:68:106:110:169:0:110 
+05/10/2018 13:05:56:  mac=0200.0001.0004&water=0&electric=280&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 13:05:56:  UPDATE sensor_current SET water=0, electric=280, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 13:05:56:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 13:05:56:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:0:280 
+05/10/2018 13:05:57:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 13:05:57:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 13:05:57:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 13:05:57:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 13:05:57:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 13:05:57:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 13:07:01:  mac=abcd.abcd.abcd&sensor=8&value=1
+05/10/2018 13:07:01:  mac=abcd.abcd.abcd&water=0&electric=177&temp1=153&temp2=158&temp3=62&temp4=129&temp5=155&temp6=167&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 13:10:01:  mac=abcd.abcd.abcd&water=0&electric=200&temp1=145&temp2=168&temp3=79&temp4=158&temp5=137&temp6=139&tog1=1&tog2=1&tog3=1&tog4=1&tog5=1&tog6=1
+05/10/2018 13:10:49:  mac=0200.0001.0004&water=2&electric=0&temp1=73&temp2=69&temp3=-196&temp4=-196&temp5=-196&temp6=-196
+05/10/2018 13:10:49:  UPDATE sensor_current SET water=2, electric=0, temp1=73, temp2=69, temp3=-196, temp4=-196, temp5=-196, temp6=-196, lastcontact=now(), lastip='172.16.0.209' WHERE mac='0200.0001.0004'
+05/10/2018 13:10:49:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 13:10:49:  /usr/bin/rrdtool update data/rrd/0200.0001.0004.rrd N:73:69:-196:-196:-196:-196:2:0 
+05/10/2018 13:10:49:  mac=0200.0001.0004&sensor=1&value=0
+05/10/2018 13:10:49:  mac=0200.0001.0004&sensor=2&value=0
+05/10/2018 13:10:50:  mac=0200.0001.0004&sensor=3&value=0
+05/10/2018 13:10:50:  mac=0200.0001.0004&sensor=4&value=0
+05/10/2018 13:10:50:  mac=0200.0001.0004&sensor=5&value=0
+05/10/2018 13:10:50:  mac=0200.0001.0004&sensor=6&value=0
+05/10/2018 13:15:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 13:15:42:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 13:20:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 13:20:34:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 13:25:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 13:25:27:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 13:30:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 13:30:20:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')
+05/10/2018 13:35:01:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='abcd.abcd.abcd')
+05/10/2018 13:35:13:  INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='0200.0001.0004')

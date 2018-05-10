@@ -1,0 +1,41 @@
+th {
+	border: 1px solid #000;
+}
+th.left_side {
+	text-align: left;
+	vertical-align: bottom;
+	border: none;
+	border-left: 1px solid #000;
+	border-top: 1px solid #000;
+}
+th.right_side {
+	text-align: right;
+	width: 100px;
+	border: none;
+	border-right: 1px solid #000;
+	border-top: 1px solid #000;
+}
+th.rotate {
+	  /* Something you can count on */
+	  height: 100px;
+	  white-space: nowrap;
+	  background: #cacaca;
+	  border: none;
+	  border-top: 1px solid #000;
+	  text-align: left;
+}
+
+th.rotate > div {
+	transform: 
+	/* Magic Numbers */
+	translate(17px, 37px)
+	/* 45 is really 360 - 45 */
+	rotate(315deg);
+	width: 26px;    
+	text-align: left;
+}
+th.rotate > div > span {
+	border-bottom: 1px solid #000;
+	padding: 5px 0px;
+	text-align: left;
+}
