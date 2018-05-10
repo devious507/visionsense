@@ -13,6 +13,7 @@ if(isset($_GET['mac'])) {
 
 $db=connectDB();
 if($_COOKIE['superadmin'] == 't') {
+	var_dump($_COOKIE);
 	$sql="SELECT userid,username,email FROM users ORDER BY username,email";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
@@ -42,7 +43,7 @@ $hidden="<input type=\"hidden\" name=\"mac\" value=\"{$mac}\">\n";
 
 $table="<tr><td bgcolor=\"#cacaca\" colspan=\"4\"><b>Sensor-ID:</b> {$mac}</td></tr>\n";
 $table.="<tr><td bgcolor=\"#cacaca\" colspan=\"4\"><a href=\"sensorDetail.php?mac={$mac}\">Back</a> || <a href=\"graphManagement.php?mac={$mac}\">Graphs</a> || <a href=\"emailAlerts.php?mac={$mac}\">Emails</a></td></tr>\n";
-if($_COOKIE['superadmin'] == true) {
+if($_COOKIE['superadmin'] == 't') {
 	$table.=$ownerSel;
 }
 $table.="<tr><td>Address</td><td colspan=\"3\"><input type=\"text\" name=\"description\" value=\"{$row['description']}\" size=\"25\"></td></tr>\n";

@@ -14,10 +14,10 @@ $dice=rand(1,100);
 if($dice <=80) {
 	exit();
 } else {
-	$sensorNames[5]='tog1';
-	$sensorNames[6]='tog2';
-	$sensorNames[7]='tog3';
-	$sensorNames[8]='tog4';
+	$sensorNames[5]='1';
+	$sensorNames[6]='2';
+	$sensorNames[7]='3';
+	$sensorNames[8]='4';
 	$db=connectDB();
 	$sql=sprintf("SELECT %s FROM sensor_current WHERE mac='%s'",$sensorNames[$sensor],$mac);
 	$res=$db->query($sql);
@@ -29,7 +29,7 @@ if($dice <=80) {
 	} else {
 		$value=1;
 	}
-	$qs=sprintf("sensor.php?mac=%s&sensor=%d&value=%d",$mac,$sensor,$value);
+	$qs=sprintf("sensor.php?mac=%s&sensor=%s&value=%d",$mac,$sensorNames[$sensor],$value);
 	$url=URLBASE.$qs;
 	print $url;
 	$fh=fopen($url,'r');
