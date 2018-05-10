@@ -12,21 +12,6 @@ if(isset($_GET['mac'])) {
 }
 
 $db=connectDB();
-if($_COOKIE['superadmin'] == 't') {
-	var_dump($_COOKIE);
-	$sql="SELECT userid,username,email FROM users ORDER BY username,email";
-	$res=$db->query($sql);
-	checkDBError($res,$sql);
-	$ownerSel="<tr><td>Owner</td><td colspan=\"3\"><select name=\"owner\">";
-	while(($row=$res->fetchRow())==true) {
-		$selected='';
-		if($row[1] == $_COOKIE['username']) {
-			$selected=" selected=\"selected\"";
-		}
-		$ownerSel.="<option value=\"{$row[0]}\"{$selected}>{$row[1]} | {$row[2]}</option>";
-	}
-	$ownerSel.="</option></td></tr>";
-}
 
 
 
@@ -34,6 +19,20 @@ if($_COOKIE['superadmin'] == 't') {
 $res=$db->query("SELECT * FROM sensor_setup WHERE mac='{$mac}'");
 checkDBError($res,$sql);
 $row=$res->fetchRow(MDB2_FETCHMODE_ASSOC);
+if($_COOKIE['superadmin'] == 't') {
+	$sql="SELECT userid,username,email FROM users ORDER BY username,email";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+	$ownerSel="<tr><td>Owner</td><td colspan=\"3\"><select name=\"owner\">";
+	while(($row2=$res->fetchRow())==true) {
+		$selected='';
+		if($row2[0] == $row['owner']) {
+			$selected=" selected=\"selected\"";
+		}
+		$ownerSel.="<option value=\"{$row2[0]}\"{$selected}>{$row2[1]} | {$row2[2]}</option>";
+	}
+	$ownerSel.="</option></td></tr>";
+}
 unset($row['mac']);
 unset($row['owner']);
 
