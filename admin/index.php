@@ -6,7 +6,6 @@ require_once("adminSecurity.php");
 
 $linkTable="<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
 $linkTable.="<tr><td bgcolor=\"#cacaca\">Links</a></td></tr>";
-$linkTable.="<tr><td><a href=\"deleteTest.php\">Purge Test Sensor Data</a></td></tr>";
 $linkTable.="<tr><td><a href=\"userManager.php\">User Manager</a></td></tr>\n";
 $linkTable.="<tr><td><a href=\"http://my.rtmscloud.com/\">Client Site</a></td></tr>\n";
 $linkTable.="<tr><td><a href=\"logout.php\">Logout</a></td></tr>\n";
