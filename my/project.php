@@ -1,7 +1,7 @@
 <?php
 
 require_once("MDB2.php");
-define("DEBUG",false);
+define("DEBUG",true);
 define("RRDTOOL","/usr/bin/rrdtool");
 define("ERRORFILE","data/ERRORS");
 define("LOGFILE","data/LOG");

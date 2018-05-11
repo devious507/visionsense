@@ -139,6 +139,9 @@ $sql="SELECT * FROM email_alerts WHERE active=true and mac='{$mac}'";
 $res=$db->query($sql);
 checkDBError($res,$sql);
 if($res->numRows() <= 0) {
+	if(DEBUG) {
+		print "No One wants email about this";
+	}
 	exit(); // All done, no one wants email no reason to do the rest of the tests!
 }
 
@@ -184,7 +187,7 @@ foreach($_GET as $k=>$v) {
 				$email=$row[0];
 				$subject="{$defs['description']} Alert from RTMS";
 				vsSendEmail($email,$subject,$body);
-				if(!DEBUG) {
+				if(DEBUG) {
 					print "Sending email for {$defs['description']} ({$mac}) sensor ({$defs[$k."_lbl"]})";
 					print " -- {$min} / {$v} / {$max}<br>\n";
 				}
@@ -206,7 +209,7 @@ foreach($_GET as $k=>$v) {
 				$subject="{$defs['description']} Alert from RTMS";
 				vsSendEmail($email,$subject,$body);
 			}
-			if(!DEBUG) {
+			if(DEBUG) {
 				print "{$k}: Alert Value {$v} IS NOT {$target}<br>\n";
 			}
 		}
