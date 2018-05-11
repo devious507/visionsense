@@ -23,6 +23,14 @@ if(isset($_GET['confirm']) && ($_GET['confirm'] == 'true')) {
 	$sql="DELETE FROM sensor_groups WHERE owner_id={$id}";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
+	$sql="SELECT id FROM sensor_groups WHERE owner_id={$id}";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+	while(($row=$res->fetchRow())==true) {
+		$sql2="UPDATE sensor_setup SET sensor_group=1 WHERE sensor_group={$row[0]}";
+		$res2=$db->query($sql2);
+		checkDBError($res2,$sql2);
+	}
 	$sql="DELETE FROM users WHERE userid={$id}";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
