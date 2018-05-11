@@ -1,6 +1,5 @@
 <?php 
 
-function checkTempDir() {}
 function rangeBox($min,$max) {}
 function expectedBox($val,$openClose=false) {}
 function matchBox($val,$exp,$openClose=false) {}

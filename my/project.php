@@ -13,8 +13,10 @@ define("GRAPHDIR","data");
 define("PATH","/");
 define("DOMAIN","rtmscloud.com");
 
-function checkTempDir() {
-	return;
+function vsSendEmail($to,$subject,$body) {
+	$headers = "From: donotreply@rtmscloud.com\r\n".
+		"X-Mailer: PHP/". phpversion();
+	mail($to,$subject,$body,$headers);
 }
 function generateSalt($cryptPW='') {
 	if(preg_match("/^\\\$2a\\\$/",$cryptPW)) {
@@ -211,7 +213,6 @@ function rrdCreate($mac) {
 
 function generateGraph($mac,$id,$link=false,$period=null) {
 	$db=connectDB();
-	checkTempDir();
 	$sql="SELECT mac,h_lbl,v_lbl,width,height,timeframe FROM graph_master WHERE id={$id} AND mac='{$mac}'";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
