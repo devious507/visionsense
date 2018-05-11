@@ -1,6 +1,11 @@
 th {
 	border: 1px solid #000;
 }
+th.center {
+	text-align: left;
+	vertical-align: bottom;
+	border: none;
+}
 th.left_side {
 	text-align: left;
 	vertical-align: bottom;

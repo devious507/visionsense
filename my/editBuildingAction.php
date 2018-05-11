@@ -6,12 +6,12 @@ require_once("security.php");
 //print "<pre>"; var_dump($_POST); print "</pre>";
 
 $needed=array("mac","description","water_min","water_max","electric_min","electric_max");
-for($i=1; $i<=6; $i++) {
+for($i=1; $i<=2; $i++) {
 	$needed[]="temp{$i}_min";
 	$needed[]="temp{$i}_max";
 	$needed[]="temp{$i}_lbl";
 }
-for($i=1; $i<=4; $i++) {
+for($i=1; $i<=6; $i++) {
 	$needed[]="tog{$i}";
 	$needed[]="tog{$i}_lbl";
 }

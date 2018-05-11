@@ -113,6 +113,33 @@ function checkDBError($res,$sql=NULL) {
 		if($sql!=NULL) {
 			logError('DB ERR SQL',$sql,'null','null');
 		}
+		$ta="<textarea cols=\"100\" rows=\"6\">";
+		print "<!DOCTYPE html><html><head><title>Error Message</title></head><body>";
+		print "<p>A database error has occurred, if this problem persists, please contact support @ 515-222-9997, to report the issue.</p>";
+		print "<p>Please be sure to include the date, and time you received this message, as well as what you were doing when this occurred, ";
+		print "so that we may research this issue and resolve it for you.</p>";
+		print "<p>Timestamp: ".date("m/d/Y H:i:s")."<br>";
+		print "Host: {$_SERVER['HTTP_HOST']}<br>";
+		print "Script: {$_SERVER['SCRIPT_NAME']}<br>";
+		print "Remote-Host: {$_SERVER['REMOTE_ADDR']}<br>";
+		if(DEBUG || preg_match("/^172\.16\.0\./",$_SERVER['REMOTE_ADDR'])) {
+			$ta="<textarea cols=\"100\" rows=\"4\">";
+			print "<hr width=\"725\" align=\"left\">SQL:<br><textarea cols=\"100\" rows=\"5\">{$sql}</textarea>";
+			print "<hr width=\"725\" align=\"left\">Error Message: ".$res->getMessage()."<br>";
+			print "<hr width=\"725\" align=\"left\">"; print "_GET:<br>{$ta}"; print json_encode($_GET); print "</textarea>"; 
+			print "<hr width=\"725\" align=\"left\">"; print "_POST:<br>{$ta}"; print json_encode($_POST); print "</textarea>"; 
+			print "<hr width=\"725\" align=\"left\">"; print "_COOKIE:<br>{$ta}"; print json_encode($_COOKIE); print "</textarea>"; 
+			print "<hr width=\"725\" align=\"left\">";
+		} else {
+			print "<hr width=\"725\" align=\"left\">";
+			print "Data-1: <br><textarea cols=\"100\" rows=\"5\">".base64_encode(json_encode($_GET))."</textarea>";
+			print "<hr width=\"725\" align=\"left\">";
+			print "Data-2: <br><textarea cols=\"100\" rows=\"5\">".base64_encode(json_encode($_POST))."</textarea>";
+			print "<hr width=\"725\" align=\"left\">";
+			print "Data-3: <br><textarea cols=\"100\" rows=\"5\">".base64_encode(json_encode($_COOKIE))."</textarea>";
+			print "<hr width=\"725\" align=\"left\">";
+		}
+		print "</body></html>";
 		exit();
 	}
 }
