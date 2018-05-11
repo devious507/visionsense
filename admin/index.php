@@ -39,9 +39,11 @@ $sql="SELECT s.mac,s.description,u.email,s.owner FROM sensor_setup AS s LEFT OUT
 $res=$db->query($sql);
 checkDBError($res,$sql);
 while(($row=$res->fetchRow())==true) {
+	$img="<img width=\"16\" height=\"16\" src=\"images/icons/delete-8x.png\">";
+	$deleteSensor = "<a href=\"deleteSensor.php?mac={$row[0]}\">{$img}</a>";
 	$editSensor="<a href=\"http://my.rtmscloud.com/editBuilding.php?mac={$row[0]}\">{$row[0]}</a>";
 	$changeOwner = $row[2];
-	$sensorTable.="<tr><td>{$row[3]}</td><td>{$editSensor}</td><td>{$row[1]}</td><td>{$changeOwner}</td></tr>";
+	$sensorTable.="<tr><td>{$row[3]}</td><td>{$editSensor}&nbsp;{$deleteSensor}</td><td>{$row[1]}</td><td>{$changeOwner}</td></tr>";
 }
 
 $sensorTable.="</table>\n";
