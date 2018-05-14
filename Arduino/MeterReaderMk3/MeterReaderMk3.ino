@@ -20,15 +20,15 @@
 // Dallas Semiconductor ONE_WIRE Stuff
 // Data wire is plugged into pin 2 on the Arduino
 #define ONE_WIRE_BUS 2
-#define PIN3DEBOUNCE 25
+#define PIN3DEBOUNCE 100
 #define PIN18DEBOUNCE 25
 #define PIN19DEBOUNCE 25
 #define PIN22DEBOUNCE 25
 #define PIN23DEBOUNCE 25
 #define PIN24DEBOUNCE 25
 #define PIN25DEBOUNCE 25
-#define DEBUG true
-#define DEBUG_VERBOSE false
+#define DEBUG false
+#define DEBUG_POWER false
 
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
@@ -148,7 +148,7 @@ void electricalProcessing() {
   int maxCurrent = 0;
   int maxCurrent2 = 0;
   for (int i = 0; i <= 200; i++) {
-    current = analogRead(A1);
+    current = analogRead(A0);
     current2 = analogRead(A1);
     if (current > maxCurrent) {
       maxCurrent = current;
@@ -164,18 +164,27 @@ void electricalProcessing() {
     }
   }
   double RMSCurrent = ((maxCurrent - 516) * 0.707) / RMSCurrentFactor;
-  double RMSCurrent2 = ((maxCurrent2 - 516) * 0 * 0.707) / RMSCurrentFactor;
+  double RMSCurrent2 = ((maxCurrent2 - 516) * 0.707) / RMSCurrentFactor;
   int RMSPower = 110 * RMSCurrent;
   int RMSPower2 = 110 * RMSCurrent2;
   electric = electric + (RMSPower * (2.05 / 60 / 60));
   electric = electric + (RMSPower2 * (2.05 / 60 / 60));
-  if (DEBUG_VERBOSE) {
-    Serial.print(RMSCurrent);
-    Serial.print(" A ");
-    Serial.print(RMSCurrent2);
-    Serial.print(" A: ");
-    Serial.print(electric);
-    Serial.println(" wH");
+  if (DEBUG_POWER) {
+    Serial.print("A0 current -- ");
+    Serial.println(maxCurrent);
+    Serial.print("A0 Amps -- ");
+    Serial.println(RMSCurrent);
+    Serial.print("A0 RMS Power --");
+    Serial.println(RMSPower);
+    
+    Serial.print("A1 current -- ");
+    Serial.println(maxCurrent2);
+    Serial.print("A1 Amps -- ");
+    Serial.println(RMSCurrent2);
+    Serial.print("A1 RMS Power --");
+    Serial.println(RMSPower2);
+    Serial.print("wH -- ");
+    Serial.println(electric);
   }
   unsigned long emillis = millis();
   while (millis() - emillis < 2000) {
