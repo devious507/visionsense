@@ -176,7 +176,7 @@ void electricalProcessing() {
     Serial.println(RMSCurrent);
     Serial.print("A0 RMS Power --");
     Serial.println(RMSPower);
-    
+
     Serial.print("A1 current -- ");
     Serial.println(maxCurrent2);
     Serial.print("A1 Amps -- ");
@@ -202,10 +202,10 @@ void pin3ISR() {
   }
 }
 void pin18ISR() {
-  //  if (millis() - pin18Millis > PIN18DEBOUNCE) {
-  sendSensorState(18, digitalRead(18));
-  pin18Millis = millis();
-  //  }
+  if (millis() - pin18Millis > PIN18DEBOUNCE) {
+    sendSensorState(18, digitalRead(18));
+    pin18Millis = millis();
+  }
 }
 void pin19ISR() {
   if (millis() - pin19Millis > PIN19DEBOUNCE) {

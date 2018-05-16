@@ -52,7 +52,7 @@ $table.="<tr><td>&nbsp;</td><td>Min</td><td colspan=\"2\">Max</td></tr>\n";
 $table.="<tr><td>Water</td><td><input type=\"text\" name=\"water_min\" value=\"{$row['water_min']}\" size=\"5\"></td><td colspan=\"2\"><input type=\"text\" size=\"5\" name=\"water_max\" value=\"{$row['water_max']}\"></td></tr>\n";
 $table.="<tr><td>Electric</td><td><input type=\"text\" name=\"electric_min\" value=\"{$row['electric_min']}\" size=\"5\"></td><td colspan=\"2\"><input type=\"text\" size=\"5\" name=\"electric_max\" value=\"{$row['electric_max']}\"></td></tr>\n";
 $table.="<tr><td>&nbsp;</td><td>Min</td><td>Max</td><td>Label</td></tr>\n";
-for($i=1; $i<=2; $i++) {
+for($i=1; $i<=6; $i++) {
 	$s=5;
 	$ss=10;
 	$lbl=$row['temp'.$i.'_lbl'];
