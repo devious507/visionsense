@@ -48,9 +48,12 @@ if($_COOKIE['superadmin'] == 't') {
 $table.="<tr><td>Address</td><td colspan=\"3\"><input type=\"text\" name=\"description\" value=\"{$row['description']}\" size=\"25\"></td></tr>\n";
 $bGroup=getBuildingGroupById($mac,$row['sensor_group']);
 $table.="<tr><td>Group</td><td colspan=\"3\">{$bGroup}</td></tr>\n";
-$table.="<tr><td>&nbsp;</td><td>Min</td><td colspan=\"2\">Max</td></tr>\n";
-$table.="<tr><td>Water</td><td><input type=\"text\" name=\"water_min\" value=\"{$row['water_min']}\" size=\"5\"></td><td colspan=\"2\"><input type=\"text\" size=\"5\" name=\"water_max\" value=\"{$row['water_max']}\"></td></tr>\n";
-$table.="<tr><td>Electric</td><td><input type=\"text\" name=\"electric_min\" value=\"{$row['electric_min']}\" size=\"5\"></td><td colspan=\"2\"><input type=\"text\" size=\"5\" name=\"electric_max\" value=\"{$row['electric_max']}\"></td></tr>\n";
+$table.="<tr><td>&nbsp;</td><td>Min</td><td colspan=\"1\">Max</td><td>Clicks / Gallon</td></tr>\n";
+$table.="<tr><td>Water</td><td><input type=\"text\" name=\"water_min\" value=\"{$row['water_min']}\" size=\"5\"></td><td colspan=\"1\"><input type=\"text\" size=\"5\" name=\"water_max\" value=\"{$row['water_max']}\"></td><td><input type=\"text\" size=\"2\" name=\"clickspergal\" value=\"{$row['clickspergal']}\"></td></tr>\n";
+//$table.="<tr><td>&nbsp;</td><td>Min</td><td colspan=\"1\">Max</td><td>Adj. Factor</td></tr>\n";
+$table.="<tr><td>&nbsp;</td><td>Min</td><td colspan=\"1\">Max</td><td>&nbsp;</td></tr>\n";
+//$table.="<tr><td>Electric</td><td><input type=\"text\" name=\"electric_min\" value=\"{$row['electric_min']}\" size=\"5\"></td><td colspan=\"1\"><input type=\"text\" size=\"5\" name=\"electric_max\" value=\"{$row['electric_max']}\"></td><td><input type=\"text\" size=\"5\" name=\"rmsadjust\" value=\"{$row['rmsadjust']}\"></td></tr>\n";
+$table.="<tr><td>Electric</td><td><input type=\"text\" name=\"electric_min\" value=\"{$row['electric_min']}\" size=\"5\"></td><td colspan=\"1\"><input type=\"text\" size=\"5\" name=\"electric_max\" value=\"{$row['electric_max']}\"></td><td>&nbsp;</td></tr>\n";
 $table.="<tr><td>&nbsp;</td><td>Min</td><td>Max</td><td>Label</td></tr>\n";
 for($i=1; $i<=6; $i++) {
 	$s=5;

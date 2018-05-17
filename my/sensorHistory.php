@@ -13,6 +13,11 @@ if(!isset($_GET['lines'])) {
 } else {
 	$limit = $_GET['lines'];
 }
+if(isset($_GET['mode']) && $_GET['mode'] == 'water_research') {
+	$research='water';
+} else {
+	$research='normal';
+}
 
 for($i=1; $i<=6; $i++) {
 	$sels[]="temp{$i}_lbl";
@@ -51,6 +56,7 @@ $description=$row[0];
 $d_colspan=count($myLbls);
 $time=date("H:i:s m/d/Y");
 
+$waterRearchLink="<a href=\"sensorHistory.php?mac={$mac}&lines=1000&research=water_research\">Water Usage Research</a>";
 print "<!DOCTYPE html>\n<html><head><meta http-equiv=\"refresh\" content=\"30\"><title>Smart Building List</title></head><body>\n";
 print "<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">\n";
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">{$description} -- {$time}</td></tr>\n";
@@ -101,36 +107,48 @@ $sql="SELECT ".implode(",",$myItems)." FROM sensor_log WHERE mac='{$mac}' ORDER 
 $res=$db->query($sql);
 checkDBError($res,$sql);
 
+$waterVal = 99999999;
+$waterTotal = 0;
 while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
-	print "<tr>\n";
-	foreach($myItems as $it) {
-		switch($it) {
-		case "water":
-		case "electric":
-		case "temp1":
-		case "temp2":
-		case "temp3":
-		case "temp4":
-		case "temp5":
-		case "temp6":
-			print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"]);
-			break;
-		case "tog1":
-		case "tog2":
-		case "tog3":
-		case "tog4":
-		case "tog5":
-		case "tog6":
-			print matchBox($row[$it],$defaults[$it],true);
-			break;
+	if(($research != 'water') || (($research == 'water') && ($row['water'] != $waterVal))) {
+		$waterVal=$row['water'];
+		$waterTotal+=$row['water'];
+		$count++;
+		print "<tr>\n";
+		foreach($myItems as $it) {
+			switch($it) {
+			case "water":
+			case "electric":
+			case "temp1":
+			case "temp2":
+			case "temp3":
+			case "temp4":
+			case "temp5":
+			case "temp6":
+				print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"]);
+				break;
+			case "tog1":
+			case "tog2":
+			case "tog3":
+			case "tog4":
+			case "tog5":
+			case "tog6":
+				print matchBox($row[$it],$defaults[$it],true);
+				break;
 
-		case "lastip":
-		case "lastcontact":
-			print "<td>{$row[$it]}</td>";
-			break;
+			case "lastip":
+			case "lastcontact":
+				print "<td>{$row[$it]}</td>";
+				break;
+			}
 		}
+		print "</tr>\n";
 	}
-	print "</tr>\n";
+	$cols=count($row);
+}
+if($research == 'water2') {
+	$cols--;
+	print "<tr><td>{$waterTotal}</td><td colspan=\"{$cols}\">&nbsp;</td></tr>\n";
 }
 
 print "</table>\n";
