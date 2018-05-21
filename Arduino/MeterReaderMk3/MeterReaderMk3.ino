@@ -16,11 +16,14 @@
 #include <EthernetUdp.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <utility/w5100.h>
+
+
 
 // Dallas Semiconductor ONE_WIRE Stuff
 // Data wire is plugged into pin 2 on the Arduino
 #define ONE_WIRE_BUS 2
-#define PIN3DEBOUNCE 100
+#define PIN3DEBOUNCE 0
 #define PIN18DEBOUNCE 25
 #define PIN19DEBOUNCE 25
 #define PIN22DEBOUNCE 25
@@ -29,7 +32,9 @@
 #define PIN25DEBOUNCE 25
 #define DEBUG false
 #define DEBUG_POWER false
+#define DEBUG_WATER false
 
+byte socketStat[MAX_SOCK_NUM];
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
@@ -40,6 +45,7 @@ byte mac[] = {0x00, 0x02, 0x00, 0xC0, 0xFF, 0xEE};
 char server[] = "collector.rtmscloud.com";
 char host[] = "HOST: collector.rtmscloud.com";
 char qsFormat[] = "GET /all.php?mac=%.2X%.2X.%.2X%.2X.%.2X%.2X&water=%d&electric=%d&temp1=%d&temp2=%d&temp3=%d&temp4=%d&temp5=%d&temp6=%d HTTP/1.1";
+char qsFormatR[] = "GET /all.php?mac=%.2X%.2X.%.2X%.2X.%.2X%.2X&water=%d&electric=%d&temp1=%d&temp2=%d&temp3=%d&temp4=%d&temp5=%d&temp6=%d&reset=true HTTP/1.1";
 char qsSingle[] = "GET /sensor.php?mac=%.2X%.2X.%.2X%.2X.%.2X%.2X&sensor=%d&value=%d HTTP/1.1";
 
 // Used loop control
@@ -54,7 +60,7 @@ unsigned long pin23Millis = millis();
 unsigned long pin24Millis = millis();
 unsigned long pin25Millis = millis();
 
-unsigned long interval = 290000;
+unsigned long interval = 20000;
 int temperatures[6] = {0, 0, 0, 0, 0, 0};
 volatile int waterPulses = 0;
 double electric = 0;
@@ -85,7 +91,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(3), pin3ISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(18), pin18ISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(19), pin19ISR, CHANGE);
-  myMillisEvents();
+  myMillisEvents(true);
   Serial.println("Done with setup stuff:   Entering main processing loop");
   Serial.println("---------------------------------------------------------------");
 }
@@ -95,7 +101,7 @@ void loop() {
   dhcpStuff();
   electricalProcessing();
   if (millis() - prevMillis >= interval) {
-    myMillisEvents();
+    myMillisEvents(false);
   }
   if (DEBUG) {
     Serial.print("TOGO (ms):  ");
@@ -130,6 +136,9 @@ void loop() {
     if (DEBUG)
       Serial.println("pin 25 flipped");
     sendSensorState(25, myState);
+  }
+  if (DEBUG) {
+    ShowSockStatus();
   }
 }
 
@@ -241,27 +250,15 @@ void sendSensorState(int num, int val) {
       break;
   }
   sprintf(tmp, qsSingle, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], mynum, val);
-  if (DEBUG) {
-    //    Serial.println(val);
-    Serial.println(tmp);
-  }
-  if (client.connect(server, 80)) {
-    // Make a HTTP request:
-    client.println(tmp);
-    client.println(host);
-    client.println("Connection: close");
-    client.println();
-    client.stop();
-  } else {
-    // if you didn't get a connection to the server:
-    Serial.println("connection failed");
-  }
+  doHttpRequest(tmp);
 }
-void myMillisEvents() {
+void myMillisEvents(bool isReset) {
   char tmp[256];
-  Serial.print(interval / 1000);
-  Serial.print(" seconds have elapsed: waterPulses=");
-  Serial.println(waterPulses);
+  if (DEBUG) {
+    Serial.print(interval / 1000);
+    Serial.print(" seconds have elapsed: waterPulses=");
+    Serial.println(waterPulses);
+  }
   sensors.requestTemperatures();
   // Delay here is to allow requestTemperatures to return, prevents sampling lag and
   // Abnormally high temperature reports on system boot.
@@ -275,30 +272,20 @@ void myMillisEvents() {
   temperatures[3] = sensors.getTempFByIndex(3);
   temperatures[4] = sensors.getTempFByIndex(4);
   temperatures[5] = sensors.getTempFByIndex(5);
-  sprintf(tmp, qsFormat, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], waterPulses, (int)electric, temperatures[0], temperatures[1], temperatures[2], temperatures[3], temperatures[4], temperatures[5]);
-  Serial.print(electric);
-  Serial.println(" Wh Used since last update.");
+  if (isReset) {
+    sprintf(tmp, qsFormatR, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], waterPulses, (int)electric, temperatures[0], temperatures[1], temperatures[2], temperatures[3], temperatures[4], temperatures[5]);
+  } else {
+    sprintf(tmp, qsFormat, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], waterPulses, (int)electric, temperatures[0], temperatures[1], temperatures[2], temperatures[3], temperatures[4], temperatures[5]);
+  }
+  if (DEBUG) {
+    Serial.print(electric);
+    Serial.println(" Wh Used since last update.");
+  }
   waterPulses = 0;
   electric = 0;
   //  setPinStateArray(false);
   prevMillis = millis();
-  if (client.connect(server, 80)) {
-    // Print the HTTP request to the serial port
-    Serial.println(tmp);
-    // Make a HTTP request:
-    client.println(tmp);
-    client.println(host);
-    client.println("Connection: close");
-    client.println();
-    client.stop();
-  } else {
-    // if you didn't get a connection to the server:
-    Serial.println("connection failed");
-  }
-  tMillis = millis();
-  while (millis() - tMillis <= 250) {
-    ; // do nothing
-  }
+  doHttpRequest(tmp);
   sendSensorState(18, digitalRead(18));
   sendSensorState(19, digitalRead(19));
   sendSensorState(22, digitalRead(22));
@@ -435,4 +422,95 @@ void readMacFromSD() {
   Serial.println("---------------------");
 }
 
+void ShowSockStatus()
+{
+  for (int i = 0; i < MAX_SOCK_NUM; i++) {
+    Serial.print(F("Socket#"));
+    Serial.print(i);
+    uint8_t s = W5100.readSnSR(i);
+    socketStat[i] = s;
+    Serial.print(F(":0x"));
+    Serial.print(s, 16);
+    Serial.print(F(" "));
+    Serial.print(W5100.readSnPORT(i));
+    Serial.print(F(" D:"));
+    uint8_t dip[4];
+    W5100.readSnDIPR(i, dip);
+    for (int j = 0; j < 4; j++) {
+      Serial.print(dip[j], 10);
+      if (j < 3) Serial.print(".");
+    }
+    Serial.print(F("("));
+    Serial.print(W5100.readSnDPORT(i));
+    Serial.println(F(")"));
+  }
+}
 
+void doHttpRequest(char tmp[256])
+{
+  int inChar;
+  int result = client.connect(server, 80);
+  int count = 1;
+  while (result != 1) {
+    Serial.print("Connection Failure: Reason -- ");
+    switch (result) {
+      case -1:
+        Serial.println("TIMED OUT");
+        break;
+      case -2:
+        Serial.println("INVALID SERVER");
+        break;
+      case -3:
+        Serial.println("TRUNCATED");
+        break;
+      case -4:
+        Serial.println("INVALID RESPONSE");
+        break;
+      default:
+        Serial.print(result);
+        Serial.println(" -- UNKNOWN REASON");
+        break;
+    }
+    Serial.print("Failure Count: ");
+    Serial.println(count);
+    if (count >= 3) {
+      if (DEBUG) {
+        for (int i = 0; i < 25; i++) {
+          Serial.println();
+        }
+      }
+      delay(100);
+      softReset();
+    }
+    count++;
+    result = client.connect(server, 80);
+  }
+  if (result == 1) {
+    // Print the HTTP request to the serial port
+    if (DEBUG) {
+      Serial.println(tmp);
+    }
+    // Make a HTTP request:
+    client.println(tmp);
+    client.println(host);
+    while (client.available()) {
+      inChar = client.read();
+      if (DEBUG) {
+        Serial.print(inChar);
+      }
+    }
+    if (DEBUG) {
+      Serial.println();
+    }
+    client.println("Connection: close");
+    client.println();
+    client.stop();
+  } else {
+    // if you didn't get a connection to the server:
+    Serial.println("connection failed");
+  }
+}
+
+void softReset() {
+  asm volatile ("  jmp 0");
+}

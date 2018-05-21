@@ -238,7 +238,7 @@ function rrdCreate($mac) {
 	return;
 }
 
-function generateGraph($mac,$id,$link=false,$period=null) {
+function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 	$db=connectDB();
 	$sql="SELECT mac,h_lbl,v_lbl,width,height,timeframe FROM graph_master WHERE id={$id} AND mac='{$mac}'";
 	$res=$db->query($sql);
@@ -302,6 +302,11 @@ function generateGraph($mac,$id,$link=false,$period=null) {
 	$rrdCmd .="--start end-{$period} ";
 	unlink($tempFile);
 	$tempFile.=".png";
+	$sql="SELECT clickspergal FROM sensor_setup WHERE mac='{$mac}'";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+	$row=$res->fetchRow();
+	$waterFactor=$row[0];
 	$sql="SELECT * FROM graph_items WHERE graphid={$id} ORDER BY id";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
@@ -313,7 +318,14 @@ function generateGraph($mac,$id,$link=false,$period=null) {
 			$color=$row['color'];
 		}
 		$defs[]="'DEF:d{$count}=data/rrd/{$mac}.rrd:{$row['col_name']}:AVERAGE' ";
-		$line[]="'{$row['type']}:d{$count}{$color}:{$row['col_lbl']}' ";
+		//$defs[]="'VDEF:d{$count}=d{$count},MIN' ";
+		if($row['col_name'] == 'water') {
+			$defs[]="'CDEF:d{$count}{$count}=d{$count},{$waterFactor},/' ";
+			$line[]="'{$row['type']}:d{$count}{$count}{$color}:{$row['col_lbl']}' ";
+		} else {
+			$line[]="'{$row['type']}:d{$count}{$color}:{$row['col_lbl']}' ";
+			//$line[]="'GPRINT:d{$count}min:%d' ";
+		}
 		$count++;
 	}
 	foreach($defs as $d) {
