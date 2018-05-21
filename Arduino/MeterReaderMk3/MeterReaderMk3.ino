@@ -12,7 +12,7 @@
 #include <Dns.h>
 #include <Ethernet.h>
 #include <EthernetClient.h>
-#include <EthernetServer.h>
+#include <HttpClient.h>
 #include <EthernetUdp.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -33,6 +33,8 @@
 #define DEBUG false
 #define DEBUG_POWER false
 #define DEBUG_WATER false
+#define SOCKET_DEBUG false
+#define DEBUG_INTERVAL 20000;
 
 byte socketStat[MAX_SOCK_NUM];
 OneWire oneWire(ONE_WIRE_BUS);
@@ -59,8 +61,8 @@ unsigned long pin22Millis = millis();
 unsigned long pin23Millis = millis();
 unsigned long pin24Millis = millis();
 unsigned long pin25Millis = millis();
+unsigned long interval = 290000;
 
-unsigned long interval = 20000;
 int temperatures[6] = {0, 0, 0, 0, 0, 0};
 volatile int waterPulses = 0;
 double electric = 0;
@@ -71,11 +73,20 @@ int pin24State;
 int pin25State;
 
 void setup() {
-  serialSetup();
-  sdSetup();
-  readMacFromSD();
-  readAdjustmentFromSD();
-  ethernetSetup();
+  if (DEBUG) {
+    interval = DEBUG_INTERVAL;
+  }
+  serialSetup();            // Initialize Serial Port
+  sdSetup();                // Get ready to read from SD
+  readMacFromSD();          // Read the mac address from SD, defaults to 02:00:00:C0:FF:EE
+  ethernetSetup();          // DHCP initialize the ethernet port
+  if (DEBUG) {
+    delay(5000);
+  }
+  getAdjustmentFromWeb();   // Use our brand new network to get the RMS Adjustment Factor from the web.
+  Serial.print("Loop Timer set to: ");
+  Serial.println(interval);
+  Serial.println("---------------------------------------------------------------");
   pinMode(2, INPUT);              // Dallas OneWire / Temperature Probes
   pinMode(3, INPUT);              // Water Meter, Interrupt Driven
   pinMode(18, INPUT);      // Interrupt Driven
@@ -137,7 +148,7 @@ void loop() {
       Serial.println("pin 25 flipped");
     sendSensorState(25, myState);
   }
-  if (DEBUG) {
+  if (SOCKET_DEBUG) {
     ShowSockStatus();
   }
 }
@@ -253,6 +264,7 @@ void sendSensorState(int num, int val) {
   doHttpRequest(tmp);
 }
 void myMillisEvents(bool isReset) {
+  Serial.println("Loop Started");
   char tmp[256];
   if (DEBUG) {
     Serial.print(interval / 1000);
@@ -363,26 +375,56 @@ void dhcpStuff() {
       break;
   }
 }
-void readAdjustmentFromSD() {
-  int count = 0;
+
+void getAdjustmentFromWeb() {
+  int err = 0;
   char tmp[] = "0000000000";
-  if (SD.exists("adjust.txt")) {
-    Serial.println("adjust.txt exists");
-    File datafile = SD.open("adjust.txt");
-    while (datafile.available()) {
-      tmp[count] = datafile.read();
-      count++;
-    }
-    datafile.close();
-    RMSCurrentFactor = atof(tmp);
-    Serial.println("Read RMSCurrentFactor From File: ");
-  } else {
-    Serial.println("adjust.txt does not exist, using default falue of 8.2377");
+  char url[256];
+  char url_tmp[] = "/getRmsAdjust.php?mac=%.2X%.2X.%.2X%.2X.%.2X%.2X";
+  char hostname[] = "my.rtmscloud.com";
+  const int kNetworkTimeout = 10 * 1000;
+  sprintf(url, url_tmp, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+  Serial.println(url);
+  HttpClient http(client);
+  err = http.get(hostname, url);
+  if ( (err >= 0) && (DEBUG) ) {
+    Serial.println("started Request: OK");
   }
+  err = http.responseStatusCode();
+  if ( (err >= 0) && (DEBUG)) {
+    Serial.print("Received responseStatusCode = ");
+    Serial.println(err);
+  }
+  err = http.skipResponseHeaders();
+  if ( (err >= 0) && (DEBUG) ) {
+    Serial.println("Skipped Headers.");
+  }
+  int bodyLen = http.contentLength();
+  char c;
+  int count = 0;
+  unsigned long timeoutStart = millis();
+  while (http.available() && ((millis() - timeoutStart) < kNetworkTimeout)) {
+    c = http.read();
+    tmp[count] = c;
+    count++;
+  }
+  http.stop();
+  RMSCurrentFactor = atof(tmp);
+  if (RMSCurrentFactor == 0) {
+    if (DEBUG) {
+      Serial.println("Network read of RMSCurrentFactor failed... rebooting");
+      Serial.println();
+      Serial.println();
+      delay(100);
+    }
+    softReset();
+  }
+  Serial.println("RMSCurrent Factor Read from WEB");
   Serial.print("RMSCurrent Factor Set to: ");
   Serial.println(RMSCurrentFactor, 6);
   Serial.println("---------------------");
 }
+
 void readMacFromSD() {
   if (SD.exists("mac.txt")) {
     Serial.println("mac.txt exists.");
@@ -498,9 +540,6 @@ void doHttpRequest(char tmp[256])
       if (DEBUG) {
         Serial.print(inChar);
       }
-    }
-    if (DEBUG) {
-      Serial.println();
     }
     client.println("Connection: close");
     client.println();
