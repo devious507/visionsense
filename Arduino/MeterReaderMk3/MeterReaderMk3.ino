@@ -61,7 +61,7 @@ unsigned long pin22Millis = millis();
 unsigned long pin23Millis = millis();
 unsigned long pin24Millis = millis();
 unsigned long pin25Millis = millis();
-unsigned long interval = 290000;
+unsigned long interval = 145000;
 
 int temperatures[6] = {0, 0, 0, 0, 0, 0};
 volatile int waterPulses = 0;
@@ -264,7 +264,8 @@ void sendSensorState(int num, int val) {
   doHttpRequest(tmp);
 }
 void myMillisEvents(bool isReset) {
-  Serial.println("Loop Started");
+  Serial.println("Loop Started"
+  );
   char tmp[256];
   if (DEBUG) {
     Serial.print(interval / 1000);

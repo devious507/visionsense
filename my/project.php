@@ -75,6 +75,9 @@ function expectedBox($val,$openClose=false) {
 	return "\t<td>{$val}</td>\n";
 }
 function matchBox($val,$exp,$openClose=false) {
+	if($val == '') {
+		return "\t<td>&nbsp;</td>\n";
+	}
 	if($val == $exp) {
 		$color=STANDARDHILIGHT;
 	} else {

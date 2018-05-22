@@ -19,20 +19,22 @@ if(isset($_GET['mode']) && $_GET['mode'] == 'water_research') {
 	$research='normal';
 }
 
-for($i=1; $i<=6; $i++) {
-	$sels[]="temp{$i}_lbl";
-}
 //for($i=1; $i<=6; $i++) {
-	//$sels[]="tog{$i}_lbl";
+	//$sels[]="temp{$i}_lbl";
 //}
+for($i=1; $i<=6; $i++) {
+	$sels[]="tog{$i}_lbl";
+}
 $sql="SELECT ".implode(",",$sels)." FROM sensor_setup WHERE mac='{$mac}'";
 $db=connectDB();
 $res=$db->query($sql);
 checkDBError($res,$sql);
+/*
 $myItems[]='water';
 $myItems[]='electric';
 $myLbls[]="Water";
 $myLbls[]="Electric";
+ */
 
 while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC))==true) {
 	foreach($row as $k=>$v) {
@@ -103,30 +105,34 @@ if(DEBUG) {
 	print "</tr>\n";
 }
 
-$sql="SELECT ".implode(",",$myItems)." FROM sensor_log WHERE mac='{$mac}' ORDER BY lastcontact DESC LIMIT {$limit}";
+$sql="SELECT ".implode(",",$myItems)." FROM alarm_log WHERE mac='{$mac}' ORDER BY lastcontact DESC LIMIT {$limit}";
 $res=$db->query($sql);
 checkDBError($res,$sql);
 
 $waterVal = 99999999;
 $waterTotal = 0;
 while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
-	if(($research != 'water') || (($research == 'water') && ($row['water'] != $waterVal))) {
-		$waterVal=$row['water'];
-		$waterTotal+=$row['water'];
-		$count++;
+	$doit=false;
+	foreach($myItems as $it) {
+		switch($it) {
+		case "tog1":
+		case "tog2":
+		case "tog3":
+		case "tog4":
+		case "tog5":
+		case "tog6":
+			if($row[$it] != '') {
+				$doit=true;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	if($doit == true) {
 		print "<tr>\n";
 		foreach($myItems as $it) {
 			switch($it) {
-			case "water":
-			case "electric":
-			case "temp1":
-			case "temp2":
-			case "temp3":
-			case "temp4":
-			case "temp5":
-			case "temp6":
-				print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"]);
-				break;
 			case "tog1":
 			case "tog2":
 			case "tog3":
@@ -144,7 +150,6 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		}
 		print "</tr>\n";
 	}
-	$cols=count($row);
 }
 if($research == 'water2') {
 	$cols--;

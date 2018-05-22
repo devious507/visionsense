@@ -53,15 +53,13 @@ if($row[0] == 1) {
 	$sql="UPDATE sensor_current SET {$sensor}={$value}, lastip='{$_SERVER['REMOTE_ADDR']}', lastcontact=now() WHERE mac='{$mac}'";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
+	$sql="INSERT INTO alarm_log (mac,{$sensor},lastip,lastcontact) VALUES ('{$mac}','{$value}','{$_SERVER['REMOTE_ADDR']}',now())";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
 } else {
 	logError("System","Unable to Update values initial readings not present",$mac,$_SERVER['REMOTE_ADDR']);
 	exit();
 }
-
-
-$sql="INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='{$mac}')";
-$res=$db->query($sql);
-checkDBError($res,$sql);
 
 
 ?>

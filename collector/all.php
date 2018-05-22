@@ -21,6 +21,12 @@ if(DEBUG) {
 
 
 $db = connectDB();
+if(isset($_GET['reset']) && ($_GET['reset'] == 'true')) {
+	$sql="INSERT INTO reset_log (mac) VALUES ('{$mac}')";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+}
+
 
 $sql="SELECT count(mac) as c FROM sensor_setup WHERE mac='{$mac}'";
 $res=$db->query($sql);
@@ -73,6 +79,8 @@ if($row[0] == 1) {
 			$electric=$v;
 			$kvp[]=$k."=".$v;
 			break;
+		case "reset":
+			break;
 		default:
 			$kvp[]=$k."=".$v;
 			break;
@@ -107,6 +115,8 @@ if($row[0] == 1) {
 				$right[]="true";
 			}
 			break;
+		case "reset":
+			break;
 		default:
 			$right[]=$v;
 			break;
@@ -125,7 +135,7 @@ if($row[0] == 1) {
 }
 
 
-$sql="INSERT INTO sensor_log (SELECT * FROM sensor_current WHERE mac='{$mac}')";
+$sql="INSERT INTO sensor_log (SELECT mac,water,electric,temp1,temp2,temp3,temp4,temp5,temp6,lastip,lastcontact FROM sensor_current WHERE mac='{$mac}')";
 logLine($sql);
 $res=$db->query($sql);
 checkDBError($res,$sql);

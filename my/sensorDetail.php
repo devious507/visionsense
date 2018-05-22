@@ -122,7 +122,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 	print "</tr>\n";
 }
 
-print "<tr><td colspan=\"16\"><a href=\"sensorList.php\">Full List</a> || <a href=\"sensorHistory.php?mac={$mac}&lines=10\">History</a> || <a href=\"editBuilding.php?mac={$mac}\">Edit</a></td></tr>\n";
+print "<tr><td colspan=\"16\"><a href=\"sensorList.php\">Full List</a> || <a href=\"historyMenu.php?mac={$mac}&lines=10\">History Menu</a> || <a href=\"editBuilding.php?mac={$mac}\">Edit</a></td></tr>\n";
 
 $end=false;
 $sql="SELECT id FROM graph_master WHERE mac='{$mac}' ORDER BY sortorder ASC";
