@@ -13,6 +13,19 @@ define("GRAPHDIR","data");
 define("PATH","/");
 define("DOMAIN","rtmscloud.com");
 
+function pageHeader($title="VisionSense",$table=false,$refresh=30,$cols=100) {
+	$logo = "<img src=\"images/visionSecurityLogo.png\">";
+	$rv ="<!DOCTYPE html>\n";
+	$rv.="<html><head><title>{$title}</title></head>\n";
+	$rv.="<body>";
+	if($table == true) {
+		$rv.="<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
+		$rv.="<tr><td bgcolor=\"#cacaca\">{$logo}</td></tr>\n";
+	} else {
+		$rv.=$logo."\n";
+	}
+	return $rv;
+}
 function vsSendEmail($to,$subject,$body) {
 	$headers = "From: donotreply@rtmscloud.com\r\n".
 		"X-Mailer: PHP/". phpversion();
@@ -243,6 +256,11 @@ function rrdCreate($mac) {
 
 function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 	$db=connectDB();
+	$sql="SELECT description FROM sensor_setup WHERE mac='{$mac}'";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+	$row=$res->fetchRow();
+	$description = $row[0];
 	$sql="SELECT mac,h_lbl,v_lbl,width,height,timeframe FROM graph_master WHERE id={$id} AND mac='{$mac}'";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
@@ -269,31 +287,31 @@ function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 	if($info['h_lbl'] != '') {
 		switch($period) {
 		case '1h':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 1 Hour' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 1 Hour' ";
 			break;
 		case '2h':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 2 Hours' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 2 Hours' ";
 			break;
 		case '6h':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 6 Hours' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 6 Hours' ";
 			break;
 		case '12h':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 12 Hours' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 12 Hours' ";
 			break;
 		case '1d':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 1 Day' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 1 Day' ";
 			break;
 		case '1w':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 1 Week' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 1 Week' ";
 			break;
 		case '1m':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 1 Month' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 1 Month' ";
 			break;
 		case '1y':
-			$rrdCmd .="--title '{$info['h_lbl']} -- 1 Year' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']} -- 1 Year' ";
 			break;
 		default:
-			$rrdCmd .="--title '{$info['h_lbl']}' ";
+			$rrdCmd .="--title '{$description}: {$info['h_lbl']}' ";
 			break;
 		}
 	}

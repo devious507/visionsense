@@ -516,7 +516,7 @@ void doHttpRequest(char tmp[256])
     }
     Serial.print("Failure Count: ");
     Serial.println(count);
-    if (count >= 3) {
+    if (count >= 5) {
       if (DEBUG) {
         for (int i = 0; i < 25; i++) {
           Serial.println();

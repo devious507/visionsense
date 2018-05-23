@@ -25,6 +25,15 @@ if(isset($_GET['reset']) && ($_GET['reset'] == 'true')) {
 	$sql="INSERT INTO reset_log (mac) VALUES ('{$mac}')";
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
+	$sql="SELECT water,electric FROM sensor_current WHERE mac='{$mac}'";
+	$res=$db->query($sql);
+	checkDBError($res,$sql);
+	$row=$res->fetchRow();
+	// Reading from first boot is artificially low for water and electric
+	// we're gonna fudge the numbers, and use the values from the last sample
+	// which is much closer to the truth than 0 to 5 would have been
+	$_GET['water']=$row[0];
+	$_GET['electric']=$row[1];
 }
 
 
@@ -38,6 +47,13 @@ if($row[0] == 0) {
 	logError('mac',"Sensor Package not configured",$mac,$_SERVER['REMOTE_ADDR']);
 	exit();
 }
+$sql="SELECT temp1_adj,temp2_adj,temp3_adj,temp4_adj,temp5_adj,temp6_adj FROM sensor_setup WHERE mac='{$mac}'";
+$res=$db->query($sql);
+checkDBError($res,$sql);
+$adj=$res->fetchRow();
+
+
+
 $sql="SELECT count(mac) as c FROM sensor_current WHERE mac='{$mac}'";
 $res=$db->query($sql);
 checkDBError($res,$sql);
@@ -63,11 +79,32 @@ if($row[0] == 1) {
 			$kvp[]=$k."='".$v."'";
 			break;
 		case "temp1":
+			$v+=$adj[0];
+			$kvp[]=$k."=".$v;
+			$temp[]=$v;
+			break;
 		case "temp2":
+			$v+=$adj[1];
+			$kvp[]=$k."=".$v;
+			$temp[]=$v;
+			break;
 		case "temp3":
+			$v+=$adj[2];
+			$kvp[]=$k."=".$v;
+			$temp[]=$v;
+			break;
 		case "temp4":
+			$v+=$adj[3];
+			$kvp[]=$k."=".$v;
+			$temp[]=$v;
+			break;
 		case "temp5":
+			$v+=$adj[4];
+			$kvp[]=$k."=".$v;
+			$temp[]=$v;
+			break;
 		case "temp6":
+			$v+=$adj[5];
 			$kvp[]=$k."=".$v;
 			$temp[]=$v;
 			break;

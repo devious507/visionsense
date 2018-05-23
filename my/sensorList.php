@@ -17,14 +17,15 @@ checkDBError($res,$sql);
 
 print "<!DOCTYPE html>\n<html><head><meta http-equiv=\"refresh\" content=\"30\"><title>Smart Building List</title></head><body>\n";
 print "<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">\n";
-print "<tr>\n";
-print "\t<td>Description</td>\n";
-print "\t<td>Sensor ID</td>\n";
-print "\t<td>Water</td>\n";
-print "\t<td>Electric</td>\n";
-print "\t<td colspan=\"6\">Temperatures</td>\n";
-print "\t<td colspan=\"6\">Intrusions</td>\n";
-print "</tr>\n";
+$bg="bgcolor=\"#ececec\"";
+$header='';
+$header.="<tr>\n";
+$header.="\t<td {$bg}>Description</td>\n";
+$header.="\t<td {$bg}>Water</td>\n";
+$header.="\t<td {$bg}>Electric</td>\n";
+$header.="\t<td {$bg} colspan=\"6\">Temperatures</td>\n";
+$header.="\t<td {$bg} colspan=\"6\">Intrusions</td>\n";
+$header.="</tr>\n";
 
 $mygroup="boogity";
 while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
@@ -38,12 +39,18 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		checkDBError($res3);
 		$row3=$res3->fetchRow();
 		$group_name=$row3[0];
-		print "<tr><td colspan=\"16\"><b>{$group_name}</b></td></tr>\n";
+		$boilers="<a href=\"graphGroups.php?group=Boiler Temp&building_group={$group_name}\">Boiler Graphs</a>";
+		$water ="<a href=\"graphGroups.php?group=Water&building_group={$group_name}\">Water Graphs</a>";
+		$electrical = "<a href=\"graphGroups.php?group=Electrical&group_name={$group_name}\">Electrical Graphs</a>";
+		print "<tr><td bgcolor=\"#cacaca\" colspan=\"16\"><hr><b>{$group_name}:</b> {$boilers}, {$water}, {$electrical}<hr></td></tr>\n";
 		$mygroup=$defaults['sensor_group'];
+		print $header;
+	}
+	if($row['description'] == '') {
+		$row['description'] = $row['mac'];
 	}
 	print "<tr>\n";
-	print "\t<td>&nbsp;&nbsp;{$row['description']}</td>";
-	print "\t<td><a href=\"sensorDetail.php?mac={$row['mac']}\">{$row['mac']}</td>";
+	print "\t<td><a href=\"sensorDetail.php?mac={$row['mac']}\">{$row['description']}</td>";
 	print minMaxBox($row['water'],$defaults['water_min'],$defaults['water_max']);
 	print minMaxBox($row['electric'],$defaults['electric_min'],$defaults['electric_max']);
 
@@ -74,7 +81,7 @@ if(isset($_GET['mac'])) {
 	print "<tr><td colspan=\"16\"><a href=\"sensorList.php\">Full List</a> || <a href=\"sensorHistory.php?mac={$mac}&lines=10\">History</a> || <a href=\"editBuilding.php?mac={$mac}\">Edit</a></td></tr>\n";
 	print "<tr><td colspan=\"16\">RRD Graphs go here</td></tr>\n";
 }
-print "<tr><td colspan=\"16\"><a href=\"manageGroup.php\">My Groups</a> || <a href=\"logout.php\">Logout</a></td></tr>\n";
+print "<tr><td colspan=\"16\"><a href=\"manageGroup.php\">My Groups</a> || <a href=\"logout.php\">Logout</a> || <a href=\"graphGroups.php\">Graph Groups</a></td></tr>\n";
 print "</table>\n";
 print "</body></html>\n";
 

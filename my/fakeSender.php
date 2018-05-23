@@ -6,33 +6,28 @@
 //
 
 require_once("project.php");
+require_once("fakerLib.php");
 
-$mac='abcd.abcd.abcd';
-$sensor=rand(5,8);
-
-$dice=rand(1,100);
-if($dice <=80) {
-	exit();
-} else {
-	$sensorNames[5]='1';
-	$sensorNames[6]='2';
-	$sensorNames[7]='3';
-	$sensorNames[8]='4';
-	$db=connectDB();
-	$sql=sprintf("SELECT %s FROM sensor_current WHERE mac='%s'",$sensorNames[$sensor],$mac);
-	$res=$db->query($sql);
-	checkDBError($res,$sql);
-	$row=$res->fetchRow();
-	$value=$row[0];
-	if($value == 't') {
-		$value=0;
-	} else {
-		$value=1;
+foreach($macs as $mac) {
+	for($i=1; $i<=4; $i++) {
+		$dice=rand(0,100);
+		if($dice >= 90) {
+			$val=0;
+		} else {
+			$val=1;
+		}
+		if($i == 1) {
+			if($val == 1) {
+				$val=0;
+			} else {
+				$val=1;
+			}
+		}
+		$url=sprintf("http://collector.rtmscloud.com/sensor.php?mac=%s&sensor=%d&value=%d",$mac,$i,$val);
+		print $url."<br>";
+		$fh=fopen($url,'r');
+		$data=stream_get_contents($fh);
+		fclose($fh);
 	}
-	$qs=sprintf("sensor.php?mac=%s&sensor=%s&value=%d",$mac,$sensorNames[$sensor],$value);
-	$url=URLBASE.$qs;
-	print $url;
-	$fh=fopen($url,'r');
-	$contents=stream_get_contents($fh);
-	fclose($fh);
 }
+?>
