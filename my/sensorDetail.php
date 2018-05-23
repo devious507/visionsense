@@ -116,7 +116,14 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 			break;
 		case "lastip":
 		case "lastcontact":
-			print "<td align=\"center\">{$row[$it]}</td>\n";
+			$then=strtotime($row[$it]);
+			$age=time()-$then;
+			if(($age >= 600) && ($it == 'lastcontact') ) {
+				$bg="bgcolor=\"".REDHIGHLIGHT."\"";
+			} else {
+				$bg="";
+			}
+			print "<td {$bg} align=\"center\">{$row[$it]}</td>\n";
 			break;
 		}
 	}

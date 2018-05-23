@@ -24,11 +24,14 @@ $header.="\t<td {$bg}>Description</td>\n";
 $header.="\t<td {$center} {$bg}>Water</td>\n";
 $header.="\t<td {$center} {$bg}>Electric</td>\n";
 $header.="\t<td {$bg} colspan=\"6\">Temperatures</td>\n";
-$header.="\t<td {$bg} colspan=\"6\">Intrusions</td>\n";
+$header.="\t<td {$bg} colspan=\"6\">Alerts</td>\n";
 $header.="</tr>\n";
 
 $mygroup="boogity";
 while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
+	$now=time();
+	$then=strtotime($row['lastcontact']);
+	$age=$now-$then;
 	$sql="SELECT * FROM sensor_setup WHERE mac='{$row['mac']}'";
 	$res2=$db->query($sql);
 	checkDBError($res2,$sql);
@@ -50,7 +53,10 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		$row['description'] = $row['mac'];
 	}
 	print "<tr>\n";
-	print "\t<td><a href=\"sensorDetail.php?mac={$row['mac']}\">{$row['description']}</td>";
+	if($age >= 600) {
+		$bg=" bgcolor=\"".REDHIGHLIGHT."\"";
+	}
+	print "\t<td {$bg}><a href=\"sensorDetail.php?mac={$row['mac']}\">{$row['description']}</td>";
 	print minMaxBox(sprintf("%.1f",$row['water']/$defaults['clickspergal']),$defaults['water_min'],$defaults['water_max'],'center');
 	print minMaxBox($row['electric'],$defaults['electric_min'],$defaults['electric_max'],'center');
 
