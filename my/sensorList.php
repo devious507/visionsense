@@ -15,14 +15,14 @@ $db=connectDB();
 $res=$db->query($sql);
 checkDBError($res,$sql);
 
-print "<!DOCTYPE html>\n<html><head><meta http-equiv=\"refresh\" content=\"30\"><title>Smart Building List</title></head><body>\n";
-print "<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">\n";
+print pageHeader("Smart Building List",true,180,16);
 $bg="bgcolor=\"#ececec\"";
+$center="align=\"center\"";
 $header='';
 $header.="<tr>\n";
 $header.="\t<td {$bg}>Description</td>\n";
-$header.="\t<td {$bg}>Water</td>\n";
-$header.="\t<td {$bg}>Electric</td>\n";
+$header.="\t<td {$center} {$bg}>Water</td>\n";
+$header.="\t<td {$center} {$bg}>Electric</td>\n";
 $header.="\t<td {$bg} colspan=\"6\">Temperatures</td>\n";
 $header.="\t<td {$bg} colspan=\"6\">Intrusions</td>\n";
 $header.="</tr>\n";
@@ -51,8 +51,8 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 	}
 	print "<tr>\n";
 	print "\t<td><a href=\"sensorDetail.php?mac={$row['mac']}\">{$row['description']}</td>";
-	print minMaxBox($row['water'],$defaults['water_min'],$defaults['water_max']);
-	print minMaxBox($row['electric'],$defaults['electric_min'],$defaults['electric_max']);
+	print minMaxBox(sprintf("%.1f",$row['water']/$defaults['clickspergal']),$defaults['water_min'],$defaults['water_max'],'center');
+	print minMaxBox($row['electric'],$defaults['electric_min'],$defaults['electric_max'],'center');
 
 	for($i=1; $i<=6; $i++) {
 		$txt = 'temp'.$i;
@@ -60,7 +60,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		$max = $txt."_max";
 		$lbl = $txt."_lbl";
 		if(strlen($defaults[$lbl]) > 0) {
-			print minMaxBox($row[$txt],$defaults[$min],$defaults[$max]);
+			print minMaxBox($row[$txt],$defaults[$min],$defaults[$max],'center');
 		} else {
 			print "<td bgcolor=\"#e3ea93\">&nbsp;</td>";
 		}
@@ -69,7 +69,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		$txt = 'tog'.$i;
 		$lbl = $txt."_lbl";
 		if(strlen($defaults[$lbl]) > 0) {
-			print matchBox($row[$txt],$defaults[$txt],true);
+			print matchBox($row[$txt],$defaults[$txt],true,$defaults[$lbl]);
 		} else {
 			print "<td bgcolor=\"#e3ea93\">&nbsp;</td>";
 		}

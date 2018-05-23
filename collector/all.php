@@ -21,6 +21,14 @@ if(DEBUG) {
 
 
 $db = connectDB();
+
+// ClicksPerGal == 0 will cause divide by zero errors, if someone set a sensor to 0
+// 1 is the more apropriate thing for it to be.  Every sensor update will fix that
+// problem for all sensors with the following 3 lines
+$sql="UPDATE sensor_setup SET clickspergal=1 WHERE clickspergal=0";
+$res=$db->query($sql);
+checkDBError($res);
+
 if(isset($_GET['reset']) && ($_GET['reset'] == 'true')) {
 	$sql="INSERT INTO reset_log (mac) VALUES ('{$mac}')";
 	$res=$db->query($sql);

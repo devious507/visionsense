@@ -135,12 +135,8 @@ $tData.="<tr><td colspan=\"3\">".generateGraph($mac,$id)."</td></tr>\n";
 
 
 
+print pageHeader("Edit Graph Properties",true,0,2,700);
 ?>
-<!DOCTYPE html>
-<html>
-<head><title>Edit Graph Properties</title></head>
-<body>
-<table cellpadding="5" cellspacing="2" border="3">
 <?php echo $tData; ?>
 </table>
 </body>

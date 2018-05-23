@@ -44,13 +44,12 @@ $description=$row[0];
 $d_colspan=count($myLbls);
 $time=date("H:i:s m/d/Y");
 
-print "<!DOCTYPE html>\n<html><head><meta http-equiv=\"refresh\" content=\"30\"><title>Smart Building List</title></head><body>\n";
-print "<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">\n";
+print pageHeader("Smart Building Detail",true,60,$d_colspan);
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">{$description} -- {$time}</td></tr>\n";
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$mac}</td></tr>\n";
 print "<tr>\n";
 foreach($myLbls as $txt) {
-	print "\t<td>{$txt}</td>\n";
+	print "\t<td align=\"center\">{$txt}</td>\n";
 }
 print "</tr>\n";
 
@@ -74,7 +73,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 			case "temp4":
 			case "temp5":
 			case "temp6":
-				print rangeBox($defaults[$it."_min"],$defaults[$it."_max"]);
+				print rangeBox($defaults[$it."_min"],$defaults[$it."_max"],'center');
 				break;
 			case "tog1":
 			case "tog2":
@@ -82,7 +81,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 			case "tog4":
 			case "tog5":
 			case "tog6":
-				print expectedBox($defaults[$it],true);
+				print expectedBox($defaults[$it],true,'center');
 				break;
 			case "lastip":
 			case "lastcontact":
@@ -96,6 +95,8 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 	foreach($myItems as $it) {
 		switch($it) {
 		case "water":
+			print minMaxBox(sprintf("%.1f",$row[$it]/$defaults['clickspergal']),$defaults[$it."_min"],$defaults[$it."_max"],'center');
+			break;
 		case "electric":
 		case "temp1":
 		case "temp2":
@@ -103,7 +104,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		case "temp4":
 		case "temp5":
 		case "temp6":
-			print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"]);
+			print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"],'center');
 			break;
 		case "tog1":
 		case "tog2":
@@ -115,7 +116,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 			break;
 		case "lastip":
 		case "lastcontact":
-			print "<td>{$row[$it]}</td>\n";
+			print "<td align=\"center\">{$row[$it]}</td>\n";
 			break;
 		}
 	}

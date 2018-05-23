@@ -57,14 +57,13 @@ $d_colspan=count($myLbls);
 $time=date("H:i:s m/d/Y");
 
 $waterRearchLink="<a href=\"sensorHistory.php?mac={$mac}&lines=1000&research=water_research\">Water Usage Research</a>";
-print "<!DOCTYPE html>\n<html><head><meta http-equiv=\"refresh\" content=\"30\"><title>Smart Building List</title></head><body>\n";
-print "<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">\n";
+print pageHeader("Sensor History Listing",true,180,7,600);
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">{$description} -- {$time}</td></tr>\n";
 $link="<a href=\"sensorDetail.php?mac={$mac}\">{$mac}</a>";
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$link}</td></tr>\n";
 print "<tr>\n";
 foreach($myLbls as $txt) {
-	print "\t<td>{$txt}</td>\n";
+	print "\t<td align=\"center\">{$txt}</td>\n";
 }
 print "</tr>\n";
 
@@ -118,27 +117,27 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		foreach($myItems as $it) {
 			switch($it) {
 			case "water":
+				print minMaxBox(sprintf("%.1f",$row[$it]/$defaults['clickspergal']),$defaults[$it."_min"],$defaults[$it."_max"],'center');
+				break;
 			case "electric":
+				print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"],'center');
+				break;
 			case "temp1":
 			case "temp2":
 			case "temp3":
 			case "temp4":
 			case "temp5":
 			case "temp6":
-				print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"]);
+				print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"],'center');
 				break;
-			case "tog1":
-			case "tog2":
-			case "tog3":
-			case "tog4":
-			case "tog5":
-			case "tog6":
-				print matchBox($row[$it],$defaults[$it],true);
-				break;
-
 			case "lastip":
+				print "<td align=\"center\">{$row[$it]}</td>";
+				break;
 			case "lastcontact":
-				print "<td>{$row[$it]}</td>";
+				$t=$row[$it];
+				$tt=preg_split("/\./",$t);
+				$tt[0]=substr($tt[0],0,strlen($tt[0])-3);
+				print "<td align=\"center\">{$tt[0]}</td>";
 				break;
 			}
 		}

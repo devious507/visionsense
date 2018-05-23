@@ -42,10 +42,7 @@ $res=$db->query($sql);
 checkDBError($res,$sql);
 $end=false;
 $time=date('m/d/Y h:i a');
-print "<!DOCTYPE html>";
-print "<html><head><meta http-equiv=\"refresh\" content=\"300\"><title>{$graph} Graphs</title></head>";
-print "<body>";
-print "<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
+print pageHeader($graph." Graphs",true,300,2);
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"2\">{$_GET['group']} Graphs -- {$extra} Generateed {$time}</td></tr>";
 
 while(($row=$res->fetchRow())==true) {

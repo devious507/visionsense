@@ -44,12 +44,10 @@ $backLink="<a href=\"editBuilding.php?mac={$mac}\">Back</a>";
 $newLink="<a href=\"createGraph.php?mac={$mac}\">Add New Graph</a>";
 $address="<tr><td colspan=\"2\" bgcolor=\"#cacaca\"><b>{$myAddress}</b></td></tr>\n";
 $sensorID="<tr><td colspan=\"2\" bgcolor=\"#cacaca\"><b>Sensor-ID: {$mac}</b></td></tr>\n";
+
+
+print pageHeader("My Graphs",true,0,2,200);
 ?>
-<!DOCTYPE html>
-<html>
-<head><title>My Graphs</title></head>
-<body>
-<table cellpadding="5" cellspacing="0" border="1">
 <?php echo $address; ?>
 <?php echo $sensorID; ?>
 <tr><td><?php echo $backLink; ?></td><td><?php echo $newLink; ?></td></tr>

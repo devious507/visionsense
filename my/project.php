@@ -1,7 +1,7 @@
 <?php
 
 require_once("MDB2.php");
-define("DEBUG",true);
+define("DEBUG",false);
 define("RRDTOOL","/usr/bin/rrdtool");
 define("ERRORFILE","data/ERRORS");
 define("LOGFILE","data/LOG");
@@ -13,16 +13,26 @@ define("GRAPHDIR","data");
 define("PATH","/");
 define("DOMAIN","rtmscloud.com");
 
-function pageHeader($title="VisionSense",$table=false,$refresh=30,$cols=100) {
-	$logo = "<img src=\"images/visionSecurityLogo.png\">";
+function pageHeader($title="VisionSense",$table=false,$refresh=0,$cols=100,$width=0,$ss='') {
+	if($width >0) {
+		$w=" width=\"{$width}\" ";
+	}
+	$logo = "<img src=\"images/visionSecurityLogo.png\"{$w}>";
 	$rv ="<!DOCTYPE html>\n";
-	$rv.="<html><head><title>{$title}</title></head>\n";
+	$rv.="<html><head>";
+	if($refresh > 0) {
+		$rv.="<meta http-equiv=\"refresh\" content=\"{$refresh}\">\n";
+	}
+	if($ss != '') {
+		$rv.=$ss."\n";
+	}
+	$rv.="<title>{$title}</title></head>\n";
 	$rv.="<body>";
 	if($table == true) {
 		$rv.="<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
-		$rv.="<tr><td bgcolor=\"#cacaca\">{$logo}</td></tr>\n";
+		$rv.="<tr>\n\t<td bgcolor=\"#cacaca\" colspan=\"{$cols}\"><a href=\"index.php\">{$logo}</a></td>\n</tr>\n";
 	} else {
-		$rv.=$logo."\n";
+		$rv.="<a href=\"index.php\">{$logo}</a>";
 	}
 	return $rv;
 }
@@ -87,15 +97,18 @@ function expectedBox($val,$openClose=false) {
 	}
 	return "\t<td>{$val}</td>\n";
 }
-function matchBox($val,$exp,$openClose=false) {
+function matchBox($val,$exp,$openClose=false,$alert="Alert") {
 	if($val == '') {
 		return "\t<td>&nbsp;</td>\n";
 	}
 	if($val == $exp) {
 		$color=STANDARDHILIGHT;
+		$val="OK";
 	} else {
 		$color=REDHILIGHT;
+		$val=$alert;
 	}
+	/*
 	if($openClose) {
 		if($val == 'f') {
 			$val="Open";
@@ -103,16 +116,21 @@ function matchBox($val,$exp,$openClose=false) {
 			$val="Closed";
 		}
 	}
-	return "\t<td bgcolor=\"{$color}\">{$val}</td>\n";
+	 */
+	return "\t<td align=\"center\" bgcolor=\"{$color}\">{$val}</td>\n";
 }
 
-function minMaxBox($val,$min,$max) {
+function minMaxBox($val,$min,$max,$align='') {
 	if(($val < $min) || ($val > $max)) {
 		$color=REDHILIGHT;
 	} else {
 		$color=STANDARDHILIGHT;
 	}
-	return "\t<td bgcolor=\"{$color}\">{$val}</td>\n";
+	if($align == '') {
+		return "\t<td bgcolor=\"{$color}\">{$val}</td>\n";
+	} else {
+		return "\t<td align=\"{$align}\" bgcolor=\"{$color}\">{$val}</td>\n";
+	}
 }
 function connectDB() {
 	$db = MDB2::singleton(DSN);

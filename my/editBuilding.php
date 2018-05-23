@@ -82,11 +82,9 @@ $table.="<tr><td colspan=\"5\"><input type=\"submit\"></td></tr>\n";
 if(DEBUG) {
 	$table.="<tr><td colspan=\"5\">{$debug}</td></tr>\n";
 } 
+
+print pageHeader("Edit Building",false,0,5,400);
 ?>
-<!DOCTYPE html>
-<html>
-<head><title>Edit Building</title></head>
-<body>
 <form method="post" action="editBuildingAction.php">
 <?php echo $hidden; ?>
 <table cellpadding="5" cellspacing="0" border="1">

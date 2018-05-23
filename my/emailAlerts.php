@@ -87,15 +87,9 @@ if($table == "") {
 	$header="";
 }
 
+$styleSheet="<link REL=\"STYLESHEET\" TYPE=\"text/css\" HREF=\"rotate.css\">";
+print pageHeader("Email Alert Setup",true,0,$ccc,650,$styleSheet);
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Email Alerting Setup</title>
-<link REL="STYLESHEET" TYPE="text/css" HREF="rotate.css">
-</head>
-<body>
-<table cellpadding="5" cellspacing="0" border="1">
 <?php echo $table_header; ?>
 <?php echo $header; ?>
 <?php echo $table; ?>

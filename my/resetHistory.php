@@ -23,13 +23,8 @@ while(($row=$res->fetchRow())==true) {
 	$tData.="<tr><td>{$row[0]}</td></tr>\n";
 }
 $link="<a href=\"sensorDetail.php?mac={$mac}\">{$mac}</a>";
+print pageHeader("Sensor Package Resets",true,300,1,400);
 ?>
-<!DOCTYPE html>
-<head>
-<title>Reset History</title>
-</head>
-<body>
-<table cellpadding="5" cellspacing="0" border="1">
 <tr><td bgcolor="#cacaca">Reset Log <?php echo $link; ?></td></tr>
 <?php echo $tData; ?>
 </table>

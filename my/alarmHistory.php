@@ -29,12 +29,6 @@ $sql="SELECT ".implode(",",$sels)." FROM sensor_setup WHERE mac='{$mac}'";
 $db=connectDB();
 $res=$db->query($sql);
 checkDBError($res,$sql);
-/*
-$myItems[]='water';
-$myItems[]='electric';
-$myLbls[]="Water";
-$myLbls[]="Electric";
- */
 
 while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC))==true) {
 	foreach($row as $k=>$v) {
@@ -59,14 +53,13 @@ $d_colspan=count($myLbls);
 $time=date("H:i:s m/d/Y");
 
 $waterRearchLink="<a href=\"sensorHistory.php?mac={$mac}&lines=1000&research=water_research\">Water Usage Research</a>";
-print "<!DOCTYPE html>\n<html><head><meta http-equiv=\"refresh\" content=\"30\"><title>Smart Building List</title></head><body>\n";
-print "<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">\n";
+print pageHeader("Alarm Logs",true,180,6,600);
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">{$description} -- {$time}</td></tr>\n";
 $link="<a href=\"sensorDetail.php?mac={$mac}\">{$mac}</a>";
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$link}</td></tr>\n";
 print "<tr>\n";
 foreach($myLbls as $txt) {
-	print "\t<td>{$txt}</td>\n";
+	print "\t<td align=\"center\">{$txt}</td>\n";
 }
 print "</tr>\n";
 
@@ -143,8 +136,11 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 				break;
 
 			case "lastip":
+				print "<td align=\"center\">{$row[$it]}</td>";
+				break;
 			case "lastcontact":
-				print "<td>{$row[$it]}</td>";
+				$t=preg_split("/\./",$row[$it]);
+				print "<td align=\"center\">{$t[0]}</td>";
 				break;
 			}
 		}
