@@ -338,6 +338,7 @@ function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 	}
 	$rrdCmd .= "--width {$width} ";
 	$rrdCmd .= "--height {$height} ";
+	$rrdCmd .= "--end now-300 ";
 	$rrdCmd .="--start end-{$period} ";
 	unlink($tempFile);
 	$tempFile.=".png";
@@ -350,6 +351,7 @@ function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
 	$count=1;
+	$waterCount=0;
 	while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC))==true) {
 		if($row['color'] == '') {
 			$color="#000000";
@@ -357,13 +359,32 @@ function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 			$color=$row['color'];
 		}
 		$defs[]="'DEF:d{$count}=data/rrd/{$mac}.rrd:{$row['col_name']}:AVERAGE' ";
-		//$defs[]="'VDEF:d{$count}=d{$count},MIN' ";
 		if($row['col_name'] == 'water') {
 			$defs[]="'CDEF:d{$count}{$count}=d{$count},{$waterFactor},/' ";
 			$line[]="'{$row['type']}:d{$count}{$count}{$color}:{$row['col_lbl']}' ";
+			$waterCount++;
+			if($waterCount == 1) {
+				$defs[]="'VDEF:d{$count}min=d{$count}{$count},MINIMUM' ";
+				$defs[]="'VDEF:d{$count}max=d{$count}{$count},MAXIMUM' ";
+				$defs[]="'VDEF:d{$count}avg=d{$count}{$count},AVERAGE' ";
+				$line[]="'COMMENT:Min\:' ";
+				$line[]="'GPRINT:d{$count}min:%3.1lf' ";
+				$line[]="'COMMENT:Max\:' ";
+				$line[]="'GPRINT:d{$count}max:%3.1lf' ";
+				$line[]="'COMMENT:Avg\:' ";
+				$line[]="'GPRINT:d{$count}avg:%3.1lf\l' ";
+			}
 		} else {
+			$defs[]="'VDEF:d{$count}max=d{$count},MAXIMUM' ";
+			$defs[]="'VDEF:d{$count}min=d{$count},MINIMUM' ";
+			$defs[]="'VDEF:d{$count}avg=d{$count},AVERAGE' ";
 			$line[]="'{$row['type']}:d{$count}{$color}:{$row['col_lbl']}' ";
-			//$line[]="'GPRINT:d{$count}min:%d' ";
+			$line[]="'COMMENT:Min\:' ";
+			$line[]="'GPRINT:d{$count}min:%3.0lf' ";
+			$line[]="'COMMENT:Max\:' ";
+			$line[]="'GPRINT:d{$count}max:%3.0lf' ";
+			$line[]="'COMMENT:Avg\:' ";
+			$line[]="'GPRINT:d{$count}avg:%3.0lf\l' ";
 		}
 		$count++;
 	}
@@ -378,7 +399,9 @@ function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 	$image = base64_encode(file_get_contents($tempFile));
 	unlink($tempFile);
 
-	//return $rrdCmd;
+	if(($_SERVER['REMOTE_ADDR'] == '172.16.0.50') && (isset($_GET['textmode'])) ){
+		return $rrdCmd;
+	}
 	if($link) {
 		return "<a href=\"graphList.php?mac={$mac}&id={$id}\"><img src=\"data:image/png;base64,{$image}\"></a>";
 	} else {

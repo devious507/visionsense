@@ -53,10 +53,15 @@ $d_colspan=count($myLbls);
 $time=date("H:i:s m/d/Y");
 
 $waterRearchLink="<a href=\"sensorHistory.php?mac={$mac}&lines=1000&research=water_research\">Water Usage Research</a>";
+$lineCounts=array(10,25,50,100,250,500,1000);
+foreach($lineCounts as $l) {
+	$links[]="<a href=\"alarmHistory.php?mac={$mac}&lines={$l}\">{$l}</a>";
+}
+$linkArray = implode(" | ",$links);
 print pageHeader("Alarm Logs",true,180,6,600);
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">{$description} -- {$time}</td></tr>\n";
 $link="<a href=\"sensorDetail.php?mac={$mac}\">{$mac}</a>";
-print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$link}</td></tr>\n";
+print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$link}<hr> # Lines: {$linkArray}</td></tr>\n";
 print "<tr>\n";
 foreach($myLbls as $txt) {
 	print "\t<td align=\"center\">{$txt}</td>\n";

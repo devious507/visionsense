@@ -42,6 +42,7 @@ if(isset($_GET['reset']) && ($_GET['reset'] == 'true')) {
 	// which is much closer to the truth than 0 to 5 would have been
 	$_GET['water']=$row[0];
 	$_GET['electric']=$row[1];
+	unset($_GET['reset']);		// This causes problems later in the script, undefine it here
 }
 
 
