@@ -47,9 +47,9 @@ print "<tr><td bgcolor=\"#cacaca\" colspan=\"2\">{$_GET['group']} Graphs -- {$ex
 
 while(($row=$res->fetchRow())==true) {
 	if($end) {
-		print generateGraph($row[0],$row[1],true)."</td></tr>\n";
+		print generateGraph($row[0],$row[1],true,'1d')."</td></tr>\n";
 	} else {
-		print "<tr><td>".generateGraph($row[0],$row[1],true)."</td><td>";
+		print "<tr><td>".generateGraph($row[0],$row[1],true,'1d')."</td><td>";
 	}
 	if($end) {
 		$end=false;

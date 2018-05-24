@@ -31,14 +31,8 @@ checkDBError($res,$sql);
 $row=$res->fetchRow();
 $bID=$row[0]." -- ".date('H:i:s m/d/Y');
 $sID="<a href=\"sensorDetail.php?mac={$mac}\">{$mac}</a>";
+print pageHeader("Graph List {$mac}",true,300,2,800);
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<title>Graph List <?php echo $mac;?></title>
-</head>
-<body>
-<table cellpadding="5" cellspacing="0" border="1">
 <tr><td colspan="2" bgcolor="#cacaca"><?php echo $bID; ?></td></tr>
 <tr><td colspan="2" bgcolor="#cacaca">Sensor-ID: <?php echo $sID; ?></td></tr>
 <?php echo $tdata; ?>

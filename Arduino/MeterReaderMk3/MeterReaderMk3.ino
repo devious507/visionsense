@@ -265,7 +265,7 @@ void sendSensorState(int num, int val) {
 }
 void myMillisEvents(bool isReset) {
   Serial.println("Loop Started"
-  );
+                );
   char tmp[256];
   if (DEBUG) {
     Serial.print(interval / 1000);
@@ -319,10 +319,11 @@ void ethernetSetup() {
   // start the Ethernet connection:
   unsigned long tMillis = millis();
   while (Ethernet.begin(mac) == 0) {
-    Serial.println("Failed to configure Ethernet using DHCP");
+    Serial.println(" Failed to configure Ethernet using DHCP");
     while (millis() - tMillis <= 10000) {
       ; // do nothing 10 second delay
     }
+    softReset();
   }
   Serial.println(host);
   // print your local IP address:

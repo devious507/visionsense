@@ -44,7 +44,7 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		$group_name=$row3[0];
 		$boilers="<a href=\"graphGroups.php?group=Boiler Temp&building_group={$group_name}\">Boiler Graphs</a>";
 		$water ="<a href=\"graphGroups.php?group=Water&building_group={$group_name}\">Water Graphs</a>";
-		$electrical = "<a href=\"graphGroups.php?group=Electrical&group_name={$group_name}\">Electrical Graphs</a>";
+		$electrical = "<a href=\"graphGroups.php?group=Electrical&building_group={$group_name}\">Electrical Graphs</a>";
 		print "<tr><td bgcolor=\"#cacaca\" colspan=\"16\"><hr><b>{$group_name}:</b> {$boilers}, {$water}, {$electrical}<hr></td></tr>\n";
 		$mygroup=$defaults['sensor_group'];
 		print $header;
