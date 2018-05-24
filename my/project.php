@@ -440,4 +440,28 @@ function debugDumper($a) {
 	print "</pre>";
 	exit();
 }
+
+function sendSMS($destination, $message) {
+	$authID='MAYTMXZTQXODJLMGNLZG';
+	$authToken='OTEzN2IyNDg2YTkzMmU5MjdiYzQwNDQ0Y2FmMzVm';
+	$postVars = json_encode(array('src'=>'15152985930',
+		'dst'=>$destination,
+		'text'=>$message,
+		'url'=>'http://collector.rtmscloud.com/smsResponse.php'
+	));
+
+	$url=sprintf("https://api.plivo.com/v1/Account/%s/Message/",$authID);
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_USERPWD, $authID.":".$authToken);
+	curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $postVars);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
+	$server_output=curl_exec($ch);
+	curl_close($ch);
+	return $server_output;
+}
 ?>
