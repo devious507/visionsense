@@ -61,7 +61,7 @@ unsigned long pin22Millis = millis();
 unsigned long pin23Millis = millis();
 unsigned long pin24Millis = millis();
 unsigned long pin25Millis = millis();
-unsigned long interval = 145000;
+unsigned long interval = 290000;
 
 int temperatures[6] = {0, 0, 0, 0, 0, 0};
 volatile int waterPulses = 0;
@@ -555,3 +555,4 @@ void doHttpRequest(char tmp[256])
 void softReset() {
   asm volatile ("  jmp 0");
 }
+

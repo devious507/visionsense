@@ -367,24 +367,37 @@ function generateGraph($mac,$id,$link=false,$period=null,$waterFactor=1) {
 				$defs[]="'VDEF:d{$count}min=d{$count}{$count},MINIMUM' ";
 				$defs[]="'VDEF:d{$count}max=d{$count}{$count},MAXIMUM' ";
 				$defs[]="'VDEF:d{$count}avg=d{$count}{$count},AVERAGE' ";
-				$line[]="'COMMENT:Min\:' ";
+				$line[]="'COMMENT:Minimum usage\:' ";
 				$line[]="'GPRINT:d{$count}min:%3.1lf' ";
-				$line[]="'COMMENT:Max\:' ";
-				$line[]="'GPRINT:d{$count}max:%3.1lf' ";
-				$line[]="'COMMENT:Avg\:' ";
+				$line[]="'COMMENT:Maximum usage\:' ";
+				$line[]="'GPRINT:d{$count}max:%3.1lf\l' ";
+				//$line[]="'COMMENT:Avg\:' ";
+				$line[]="'HRULE:d{$count}avg#000000:Average Water Use' ";		// Comment this to get rid of everage line
 				$line[]="'GPRINT:d{$count}avg:%3.1lf\l' ";
 			}
+		} elseif($row['col_name'] == 'electricity') {
+			$defs[]="'VDEF:d{$count}max=d{$count},MAXIMUM' ";
+			$defs[]="'VDEF:d{$count}min=d{$count},MINIMUM' ";
+			$defs[]="'VDEF:d{$count}avg=d{$count},AVERAGE' ";
+			$line[]="'{$row['type']}:d{$count}{$color}:{$row['col_lbl']}' ";
+			$line[]="'COMMENT:Minimum usage\:' ";
+			$line[]="'GPRINT:d{$count}min:%3.0lf' ";
+			$line[]="'COMMENT:Maximum usage\:' ";
+			$line[]="'GPRINT:d{$count}max:%3.0lf\l' ";
+			//$line[]="'COMMENT:Avg\:' ";
+			$line[]="'HRULE:d{$count}avg#000000:Average Electric Use' ";			// Comment this to get rid of average line
+			$line[]="'GPRINT:d{$count}avg:%3.0lf\l' ";
 		} else {
 			$defs[]="'VDEF:d{$count}max=d{$count},MAXIMUM' ";
 			$defs[]="'VDEF:d{$count}min=d{$count},MINIMUM' ";
 			$defs[]="'VDEF:d{$count}avg=d{$count},AVERAGE' ";
 			$line[]="'{$row['type']}:d{$count}{$color}:{$row['col_lbl']}' ";
-			$line[]="'COMMENT:Min\:' ";
+			$line[]="'COMMENT:Minimum\:' ";
 			$line[]="'GPRINT:d{$count}min:%3.0lf' ";
-			$line[]="'COMMENT:Max\:' ";
-			$line[]="'GPRINT:d{$count}max:%3.0lf' ";
-			$line[]="'COMMENT:Avg\:' ";
-			$line[]="'GPRINT:d{$count}avg:%3.0lf\l' ";
+			$line[]="'COMMENT:Avgerage\:' ";
+			$line[]="'GPRINT:d{$count}avg:%3.0lf' ";
+			$line[]="'COMMENT:Maximum\:' ";
+			$line[]="'GPRINT:d{$count}max:%3.0lf\l' ";
 		}
 		$count++;
 	}
