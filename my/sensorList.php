@@ -57,7 +57,19 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 		$bg=" bgcolor=\"".REDHIGHLIGHT."\"";
 	}
 	print "\t<td {$bg}><a href=\"sensorDetail.php?mac={$row['mac']}\">{$row['description']}</td>";
-	print minMaxBox(sprintf("%.1f",$row['water']/$defaults['clickspergal']),$defaults['water_min'],$defaults['water_max'],'center');
+	
+	// Need to do some calcs here
+	// 1.  What is the wateralerthours value
+	// 2.  Has there beein a 0 within the last $value amount of time?
+	$sqlAlert = "SELECT mac from sensor_log WHERE mac='{$row['mac']}' AND water <= {$defaults['water_min']} AND lastcontact > now()-interval '{$defaults['wateralerthours']} hours' ORDER BY lastcontact DESC LIMIT 1";
+	$resAlert = $db->query($sqlAlert);
+	checkDBError($resAlert,$sqlAlert);
+	if($resAlert->numRows() == 0) {
+		print "<td align=\"center\" bgcolor=\"".REDHIGHLIGHT."\">".sprintf("%.1f",$row['water']/$defaults['clickspergal'])."</td>";
+	} else {
+		print minMaxBox(sprintf("%.1f",$row['water']/$defaults['clickspergal']),$defaults['water_min'],$defaults['water_max'],'center');
+	}
+
 	print minMaxBox($row['electric'],$defaults['electric_min'],$defaults['electric_max'],'center');
 
 	for($i=1; $i<=6; $i++) {

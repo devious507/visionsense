@@ -33,8 +33,8 @@
 #define DEBUG false
 #define DEBUG_POWER false
 #define DEBUG_WATER false
-#define SOCKET_DEBUG false
-#define DEBUG_INTERVAL 20000;
+#define SOCKET_DEBUG true
+#define DEBUG_INTERVAL 20000
 
 byte socketStat[MAX_SOCK_NUM];
 OneWire oneWire(ONE_WIRE_BUS);
@@ -151,6 +151,9 @@ void loop() {
   if (SOCKET_DEBUG) {
     ShowSockStatus();
   }
+  digitalWrite(53, HIGH);
+  delay(20)
+  digitalWrite(53, LOW);
 }
 
 void sdSetup() {
@@ -552,7 +555,15 @@ void doHttpRequest(char tmp[256])
   }
 }
 
-void softReset() {
-  asm volatile ("  jmp 0");
+void softReset(bool soft = true) {
+  if (soft == true) {
+    asm volatile ("  jmp 0");
+  } else {
+    while (1) {
+      // intentionally hang the program, will watchdog reset after approximately 1 minutes
+    }
+  }
+  }
+}
 }
 

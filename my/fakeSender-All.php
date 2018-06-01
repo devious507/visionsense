@@ -7,7 +7,11 @@ require_once("project.php");
 require_once("fakerLib.php");
 
 foreach($macs as $mac) {
-	$water=rand(144,1200);		// 12-100 Gallons
+	if(rand(0,100) > 90) {
+		$water=0;
+	} else {
+		$water=rand(1,720);		// 1/12 to 60 Gallons
+	}
 	$temp1=rand(170,180);
 	$temp2=rand(80,100);
 	$temp3=$temp1+rand(5,10);

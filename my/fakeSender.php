@@ -11,7 +11,7 @@ require_once("fakerLib.php");
 foreach($macs as $mac) {
 	for($i=1; $i<=4; $i++) {
 		$dice=rand(0,100);
-		if($dice >= 90) {
+		if($dice >= 95) {
 			$val=0;
 		} else {
 			$val=1;
