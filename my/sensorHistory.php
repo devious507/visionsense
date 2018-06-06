@@ -3,9 +3,28 @@
 require_once("project.php");
 require_once("security.php");
 
-
+if(isset($_GET['startDateOnly']) && isset($_GET['startTimeOnly'])) {
+	$startDateOnly = $_GET['startDateOnly'];
+	$startTimeOnly = $_GET['startTimeOnly'];
+	$start = $startDateOnly."T".$startTimeOnly;
+} else {
+	$startDateOnly = date("Y-m-d");
+	$startTimeOnly = "00:00";
+	$start = date("Y-m-d")."T00:00";
+}
+if(isset($_GET['endDateOnly']) && isset($_GET['endTimeOnly'])) {
+	$endDateOnly = $_GET['endDateOnly'];
+	$endTimeOnly = $_GET['endTimeOnly'];
+	$end = $endDateOnly."T".$endTimeOnly;
+} else {
+	$endDateOnly = date("Y-m-d");
+	$endTimeOnly = "23:59";
+	$end = date("Y-m-d")."T23:59";
+}
 if(isset($_GET['mac'])) {
 	$mac=$_GET['mac'];
+} else {
+	header("Location: index.php");
 }
 
 if(!isset($_GET['lines'])) {
@@ -57,10 +76,28 @@ $d_colspan=count($myLbls);
 $time=date("H:i:s m/d/Y");
 
 $waterRearchLink="<a href=\"sensorHistory.php?mac={$mac}&lines=1000&research=water_research\">Water Usage Research</a>";
+$startVal=$endVal="";
+
+if(isset($start)) {
+	$startDateVal = "value=\"{$startDateOnly}\"";
+	$startTimeVal = "value=\"{$startTimeOnly}\"";
+}
+if(isset($end)) {
+	$endDateVal = "value=\"{$endDateOnly}\"";
+	$endTimeVal = "value=\"{$endTimeOnly}\"";
+}
+
+
+$linkArray="<form method=\"get\" action=\"sensorHistory.php\"><input type=\"hidden\" name=\"mac\" value=\"{$mac}\">
+	<input {$startDateVal} type=\"date\" name=\"startDateOnly\"> <input {$startTimeVal} type=\"time\" name=\"startTimeOnly\"> -
+	<input {$endDateVal} type=\"date\" name=\"endDateOnly\"> <input {$endTimeVal} type=\"time\" name=\"endTimeOnly\"><input type=\"submit\" value=\"Go\"></form>";
+
+
 print pageHeader("Sensor History Listing",true,180,7,600);
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">{$description} -- {$time}</td></tr>\n";
 $link="<a href=\"sensorDetail.php?mac={$mac}\">{$mac}</a>";
-print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$link}</td></tr>\n";
+print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$link}<hr>{$linkArray}</td></tr>\n";
+
 print "<tr>\n";
 foreach($myLbls as $txt) {
 	print "\t<td align=\"center\">{$txt}</td>\n";
@@ -102,7 +139,11 @@ if(DEBUG) {
 	print "</tr>\n";
 }
 
-$sql="SELECT ".implode(",",$myItems)." FROM sensor_log WHERE mac='{$mac}' ORDER BY lastcontact DESC LIMIT {$limit}";
+if(isset($start) && isset($end)) {
+	$sql="SELECT ".implode(",",$myItems)." FROM sensor_log WHERE mac='{$mac}' AND lastcontact >= '{$start}' AND lastcontact <= '{$end}' ORDER BY lastcontact DESC";
+} else {
+	$sql="SELECT ".implode(",",$myItems)." FROM sensor_log WHERE mac='{$mac}' ORDER BY lastcontact DESC LIMIT {$limit}";
+}
 $res=$db->query($sql);
 checkDBError($res,$sql);
 
