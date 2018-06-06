@@ -33,7 +33,7 @@
 #define DEBUG false
 #define DEBUG_POWER false
 #define DEBUG_WATER false
-#define SOCKET_DEBUG true
+#define SOCKET_DEBUG false
 #define DEBUG_INTERVAL 20000
 
 byte socketStat[MAX_SOCK_NUM];
@@ -77,6 +77,11 @@ void setup() {
     interval = DEBUG_INTERVAL;
   }
   serialSetup();            // Initialize Serial Port
+  pinMode(53, OUTPUT);
+  Serial.println("Resetting Watchdog as part of boot process");
+  digitalWrite(53, HIGH);
+  delay(20);
+  digitalWrite(53, LOW);
   sdSetup();                // Get ready to read from SD
   readMacFromSD();          // Read the mac address from SD, defaults to 02:00:00:C0:FF:EE
   ethernetSetup();          // DHCP initialize the ethernet port
@@ -151,9 +156,6 @@ void loop() {
   if (SOCKET_DEBUG) {
     ShowSockStatus();
   }
-  digitalWrite(53, HIGH);
-  delay(20)
-  digitalWrite(53, LOW);
 }
 
 void sdSetup() {
@@ -301,7 +303,20 @@ void myMillisEvents(bool isReset) {
   electric = 0;
   //  setPinStateArray(false);
   prevMillis = millis();
-  doHttpRequest(tmp);
+  bool resp;
+  resp = doHttpRequest(tmp);
+  if (resp == true) {
+    Serial.println("Resetting Watchdog on 5minute success");
+    digitalWrite(53, HIGH);
+    delay(20);
+    digitalWrite(53, LOW);
+  } else {
+    if (DEBUG) {
+      Serial.println();
+      Serial.println();
+      Serial.println(resp);
+    }
+  }
   sendSensorState(18, digitalRead(18));
   sendSensorState(19, digitalRead(19));
   sendSensorState(22, digitalRead(22));
@@ -382,6 +397,8 @@ void dhcpStuff() {
 }
 
 void getAdjustmentFromWeb() {
+  Serial.println("Waiting for TCP...");
+  delay(2000);
   int err = 0;
   char tmp[] = "0000000000";
   char url[256];
@@ -493,69 +510,81 @@ void ShowSockStatus()
   }
 }
 
-void doHttpRequest(char tmp[256])
+bool doHttpRequest(char tmp[256])
 {
   int inChar;
-  int result = client.connect(server, 80);
   int count = 1;
+  int result = 0;
   while (result != 1) {
-    Serial.print("Connection Failure: Reason -- ");
+    result = client.connect(server, 80);
+    if (result != 1) {
+      Serial.print("Connection Failure: Reason -- ");
+    }
     switch (result) {
+      case 1:
+        break;
       case -1:
         Serial.println("TIMED OUT");
+        delay(2000);
         break;
       case -2:
         Serial.println("INVALID SERVER");
+        delay(2000);
         break;
       case -3:
         Serial.println("TRUNCATED");
+        delay(2000);
         break;
       case -4:
         Serial.println("INVALID RESPONSE");
+        delay(2000);
         break;
       default:
         Serial.print(result);
         Serial.println(" -- UNKNOWN REASON");
+        delay(2000);
         break;
     }
-    Serial.print("Failure Count: ");
-    Serial.println(count);
     if (count >= 5) {
       if (DEBUG) {
-        for (int i = 0; i < 25; i++) {
-          Serial.println();
-        }
+        Serial.println();
+        Serial.println("Rebooting...");
+        Serial.println();
+        delay(200);
       }
-      delay(100);
       softReset();
     }
-    count++;
-    result = client.connect(server, 80);
+    if (result != 1) {
+      Serial.print("Failure Count: ");
+      Serial.println(count);
+      count++;
+    }
   }
-  if (result == 1) {
-    // Print the HTTP request to the serial port
+  // Print the HTTP request to the serial port
+  if (DEBUG) {
+    Serial.println(tmp);
+  }
+  // Make a HTTP request:
+  client.println(tmp);
+  client.println(host);
+  while (client.available()) {
+    inChar = client.read();
     if (DEBUG) {
-      Serial.println(tmp);
+      Serial.print(inChar);
     }
-    // Make a HTTP request:
-    client.println(tmp);
-    client.println(host);
-    while (client.available()) {
-      inChar = client.read();
-      if (DEBUG) {
-        Serial.print(inChar);
-      }
-    }
-    client.println("Connection: close");
-    client.println();
-    client.stop();
+  }
+  client.println("Connection: close");
+  client.println();
+  client.stop();
+  if (result == 1) {
+    return true;
   } else {
-    // if you didn't get a connection to the server:
-    Serial.println("connection failed");
+    return false;
   }
 }
 
-void softReset(bool soft = true) {
+void softReset() {
+  bool soft = true;
   if (soft == true) {
     asm volatile ("  jmp 0");
   } else {
@@ -563,7 +592,5 @@ void softReset(bool soft = true) {
       // intentionally hang the program, will watchdog reset after approximately 1 minutes
     }
   }
-  }
-}
 }
 
