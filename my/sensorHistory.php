@@ -149,19 +149,21 @@ checkDBError($res,$sql);
 
 $waterVal = 99999999;
 $waterTotal = 0;
+$elecTotal = 0;
+$count=0;
 while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 	if(($research != 'water') || (($research == 'water') && ($row['water'] != $waterVal))) {
-		$waterVal=$row['water'];
-		$waterTotal+=$row['water'];
 		$count++;
 		print "<tr>\n";
 		foreach($myItems as $it) {
 			switch($it) {
 			case "water":
 				print minMaxBox(sprintf("%.1f",$row[$it]/$defaults['clickspergal']),$defaults[$it."_min"],$defaults[$it."_max"],'center');
+				$waterTotal+=$row[$it]/$defaults['clickspergal'];
 				break;
 			case "electric":
 				print minMaxBox($row[$it],$defaults[$it."_min"],$defaults[$it."_max"],'center');
+				$elecTotal+=$row[$it];
 				break;
 			case "temp1":
 			case "temp2":
@@ -186,11 +188,11 @@ while(($row=$res->fetchRow(MDB2_FETCHMODE_ASSOC)) == true) {
 	}
 	$cols=count($row);
 }
-if($research == 'water2') {
-	$cols--;
-	print "<tr><td>{$waterTotal}</td><td colspan=\"{$cols}\">&nbsp;</td></tr>\n";
-}
 
+// Totals and counts, comment out the n3xt 3 lines if un-wanted
+$waterTotal = round($waterTotal,1);
+$elecTotal = round($elecTotal,1);
+print "<tr><td align=\"center\">{$waterTotal}</td><td align=\"center\">{$elecTotal}</td><td colspan=\"2\">&nbsp;</td><td colspan=\"2\">{$count} Entries</td></tr>\n";
 print "</table>\n";
 print "</body></html>\n";
 
