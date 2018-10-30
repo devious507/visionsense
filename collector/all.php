@@ -199,6 +199,10 @@ if($res->numRows() <= 0) {
 		print "No One wants email about this";
 	}
 	exit(); // All done, no one wants email no reason to do the rest of the tests!
+} else {
+	if(DEBUG) {
+		print "here we go emails!";
+	}
 }
 
 // Well, someone wanted emails about this sensor package, so now we need to determine what, if any we need to send
@@ -208,6 +212,7 @@ $names[]='water_min';
 $names[]='water_max';
 $names[]='electric_min';
 $names[]='electric_max';
+$names[]='clickspergal';
 for($i=1; $i <=6; $i++) {
 	$names[]="temp{$i}_min";
 	$names[]="temp{$i}_max";
@@ -226,6 +231,9 @@ $defs['electric_lbl'] = 'Electric Usage';
 unset($_GET['lastcontact']);
 unset($_GET['lastip']);
 foreach($_GET as $k=>$v) {
+	if($k == 'water') {
+		$v/=$defs['clickspergal'];
+	}
 	$body = "Attention: your sensor package {$mac} located at/in {$defs['description']} has reported a value that is ";
 	$body.= "out of range on the {$defs[$k."_lbl"]} sensor.  As requested this email has been generated to let you know ";
 	$body.= "about the issue that may require your attention.\n\n";

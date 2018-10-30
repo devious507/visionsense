@@ -28,7 +28,7 @@ if(!isset($_GET['mac'])) {
 	$mac=$_GET['mac'];
 }
 if(!isset($_GET['lines'])) {
-	$lines=10;
+	$lines=9999;
 } else {
 	$lines=$_GET['lines'];
 }
@@ -58,7 +58,7 @@ while(($row=$res->fetchRow())==true) {
 $link="<a href=\"sensorDetail.php?mac={$mac}\">{$mac}</a>";
 print pageHeader("Sensor Package Resets",true,300,1,400);
 ?>
-<tr><td bgcolor="#cacaca">Reset Log <?php echo $link; ?><hr><?php echo $linkArray; ?></td></tr>
+<tr><td bgcolor="#cacaca">Reset Log <?php echo $link; echo "   "; echo date("h:i:s"); ?><hr><?php echo $linkArray; ?></td></tr>
 <?php echo $tData; ?>
 </table>
 </body>

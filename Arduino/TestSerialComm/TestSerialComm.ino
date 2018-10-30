@@ -3,8 +3,6 @@
 int incByte0 = 0;
 int incByte1 = 0;
 int incByte2 = 0;
-unsigned long myMillis = millis();
-unsigned long tMillis = 10000;
 
 void setup() {
   serialSetup();
@@ -15,39 +13,26 @@ void setup() {
 }
 
 void loop() {
-  if (millis() > tMillis) {
-    Serial.print(millis() - myMillis);
-    Serial.print(" miliseconds have elapsed since last reset.  ");
-    Serial.print("Pin 53 State: ");
-    Serial.println(digitalRead(53));
-    tMillis += 10000;
-  }
   if (Serial.available() > 0) {
     incByte0 = Serial.read();
     Serial.print("I received on 0: (");
     Serial.print(incByte0, DEC);
     Serial.print(") ");
     Serial.println(char(incByte0));
-    if (incByte0 == 82) {
-      Serial.println("Resetting Watchdog!  WOOF WOOF");
-      myMillis = millis();
-      tMillis = myMillis;
-      digitalWrite(53, HIGH);
-      delay(20);
-      Serial.print("Pin 53 State: ");
-      Serial.println(digitalRead(53));
-      digitalWrite(53, LOW);
-    }
   }
   if (Serial1.available() > 0) {
     incByte1 = Serial1.read();
-    Serial.print("I received on 1: ");
-    Serial.println(incByte1, DEC);
+    Serial.print("I received on 1: (");
+    Serial.print(incByte1, DEC);
+    Serial.print(") ");
+    Serial.println(char(incByte1));
   }
   if (Serial2.available() > 0) {
-    incByte1 = Serial2.read();
-    Serial.print("I received on 2: ");
-    Serial.println(incByte1, DEC);
+    incByte2 = Serial2.read();
+    Serial.print("I received on 2: (");
+    Serial.print(incByte2, DEC);
+    Serial.print(") ");
+    Serial.println(char(incByte2));
   }
 }
 

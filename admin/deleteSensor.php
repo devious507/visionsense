@@ -48,5 +48,10 @@ $sql="DELETE FROM sensor_setup WHERE mac='{$mac}'";
 $res=$db->query($sql);
 checkDBError($res,$sql);
 
+$sql="DELETE FROM reset_log WHERE mac='{$mac}'";
+$res=$db->query($sql);
+checkDBError($res,$sql);
+
+
 header("Location: index.php");
 ?>

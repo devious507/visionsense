@@ -6,6 +6,7 @@ define("FILE_AGE",3600);
 define("TOUCH_FILE","data/watchDogDave.txt");
 define("PHONENUM",'17012405449');
 define("PHONENUM2",'17012402815');
+define("PHONENUM3",'15152295620');
 
 $db=connectDB();
 $sql="SELECT lastcontact FROM sensor_current WHERE mac='0200.0001.0004'";
@@ -64,6 +65,8 @@ if($age < ALERT_AGE) {
 if(!file_exists(TOUCH_FILE)) {
 	touch(TOUCH_FILE);
 	sendSMS(PHONENUM,'5951 Vista Dr -- Sensors Offline '.date("h:i m/d/Y"));
+	sleep(2);
+	sendSMS(PHONENUM3,'5951 Vista Dr -- Sensors Offline '.date("h:i m/d/Y"));
 	if(date('G') >=8 && date('G') < 22) {
 		sleep(2);
 		sendSMS(PHONENUM2,'5951 Vista Dr -- Sensors Offline '.date("h:i m/d/Y"));

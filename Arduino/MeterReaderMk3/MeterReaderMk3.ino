@@ -1,10 +1,13 @@
 // This sketch is designed for the 5v MEGA
-// 3.3V DUE may cause issue, so we're gonna go with the mega
-// complete with 4 interruptable intrusion sensors (18,19,20,21)
-// 2 standard intrusion sensors (loop processed) (22,23);
+// complete with 2 interruptable intrusion sensors (18,19)
+// 4 standard intrusion sensors (loop processed) (22,24,26,28);
+// (6 Total)
+//
 // electrical processing on A0 and A1
 // OneWire Reading on 2
 // Water Monitoring (Interrupt) on 3
+//
+// Pin 48 is Watchdog PAT signal
 
 #include <SPI.h>
 #include <SD.h>
@@ -27,14 +30,15 @@
 #define PIN18DEBOUNCE 25
 #define PIN19DEBOUNCE 25
 #define PIN22DEBOUNCE 25
-#define PIN23DEBOUNCE 25
 #define PIN24DEBOUNCE 25
-#define PIN25DEBOUNCE 25
-#define DEBUG false
-#define DEBUG_POWER false
-#define DEBUG_WATER false
+#define PIN26DEBOUNCE 25
+#define PIN28DEBOUNCE 25
+#define DEBUG true
+#define DEBUG_POWER true
+#define DEBUG_WATER true
 #define SOCKET_DEBUG false
-#define DEBUG_INTERVAL 20000
+#define DEBUG_WATCHDOG true
+#define DEBUG_INTERVAL 29000
 
 byte socketStat[MAX_SOCK_NUM];
 OneWire oneWire(ONE_WIRE_BUS);
@@ -58,9 +62,9 @@ unsigned long pin3Millis = millis();
 unsigned long pin18Millis = millis();
 unsigned long pin19Millis = millis();
 unsigned long pin22Millis = millis();
-unsigned long pin23Millis = millis();
 unsigned long pin24Millis = millis();
-unsigned long pin25Millis = millis();
+unsigned long pin26Millis = millis();
+unsigned long pin28Millis = millis();
 unsigned long interval = 290000;
 
 int temperatures[6] = {0, 0, 0, 0, 0, 0};
@@ -68,20 +72,27 @@ volatile int waterPulses = 0;
 double electric = 0;
 double RMSCurrentFactor = 8.2377;
 int pin22State;
-int pin23State;
 int pin24State;
-int pin25State;
+int pin26State;
+int pin28State;
 
 void setup() {
+  pinMode(48, OUTPUT);
   if (DEBUG) {
     interval = DEBUG_INTERVAL;
   }
   serialSetup();            // Initialize Serial Port
-  pinMode(53, OUTPUT);
-  Serial.println("Resetting Watchdog as part of boot process");
-  digitalWrite(53, HIGH);
-  delay(20);
-  digitalWrite(53, LOW);
+  delay(1000);
+  if (DEBUG_WATCHDOG == false) {
+    Serial.println("Resetting Watchdog as part of boot process");
+    digitalWrite(48, HIGH);
+    delay(20);
+    digitalWrite(48, LOW);
+  } else {
+    Serial.println("");
+    Serial.println("                              Watchdog debugging in progress:  Expect reboots every 5 to 7 minutes!");
+    Serial.println("");
+  }
   sdSetup();                // Get ready to read from SD
   readMacFromSD();          // Read the mac address from SD, defaults to 02:00:00:C0:FF:EE
   ethernetSetup();          // DHCP initialize the ethernet port
@@ -97,13 +108,13 @@ void setup() {
   pinMode(18, INPUT);      // Interrupt Driven
   pinMode(19, INPUT);      // Interrupt Driven
   pinMode(22, INPUT);      // Poll Driven
-  pinMode(23, INPUT);      // Poll Driven
   pinMode(24, INPUT);      // Poll Driven
-  pinMode(25, INPUT);      // Poll Driven
+  pinMode(26, INPUT);      // Poll Driven
+  pinMode(28, INPUT);      // Poll Driven
   pin22State = digitalRead(22);
-  pin23State = digitalRead(23);
   pin24State = digitalRead(24);
-  pin25State = digitalRead(25);
+  pin26State = digitalRead(26);
+  pin28State = digitalRead(28);
   attachInterrupt(digitalPinToInterrupt(3), pin3ISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(18), pin18ISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(19), pin19ISR, CHANGE);
@@ -132,13 +143,6 @@ void loop() {
       Serial.println("pin 22 flipped");
     sendSensorState(22, myState);
   }
-  myState = digitalRead(23);
-  if ((myState != pin23State) && (millis() - pin23Millis >= PIN23DEBOUNCE)) {
-    pin23State = myState;
-    if (DEBUG)
-      Serial.println("pin 23 flipped");
-    sendSensorState(23, myState);
-  }
   myState = digitalRead(24);
   if ((myState != pin24State) && (millis() - pin24Millis >= PIN24DEBOUNCE)) {
     pin24State = myState;
@@ -146,12 +150,19 @@ void loop() {
       Serial.println("pin 24 flipped");
     sendSensorState(24, myState);
   }
-  myState = digitalRead(25);
-  if ((myState != pin25State) && (millis() - pin25Millis >= PIN25DEBOUNCE)) {
-    pin25State = myState;
+  myState = digitalRead(26);
+  if ((myState != pin26State) && (millis() - pin26Millis >= PIN26DEBOUNCE)) {
+    pin26State = myState;
     if (DEBUG)
-      Serial.println("pin 25 flipped");
-    sendSensorState(25, myState);
+      Serial.println("pin 26 flipped");
+    sendSensorState(26, myState);
+  }
+  myState = digitalRead(28);
+  if ((myState != pin28State) && (millis() - pin28Millis >= PIN28DEBOUNCE)) {
+    pin28State = myState;
+    if (DEBUG)
+      Serial.println("pin 28 flipped");
+    sendSensorState(28, myState);
   }
   if (SOCKET_DEBUG) {
     ShowSockStatus();
@@ -164,7 +175,19 @@ void sdSetup() {
     Serial.println("initialization failed!");
   } else {
     Serial.println("initialization done.");
+    Serial.println();
+    Serial.println();
+    Serial.println();
+    if (SD.exists("ready.txt")) {
+      Serial.println("ready.txt exists");
+    } else {
+      Serial.println("ready.txt does not exist... attempting to create");
+      File rf = SD.open("ready.txt",FILE_WRITE);
+      rf.write("ready");
+      rf.close();
+    }
   }
+  Serial.println("Done in sdSetup()");
 }
 void electricalProcessing() {
   // Electrical Processing stuff
@@ -255,13 +278,13 @@ void sendSensorState(int num, int val) {
     case 22:
       mynum = 3;
       break;
-    case 23:
+    case 24:
       mynum = 4;
       break;
-    case 24:
+    case 26:
       mynum = 5;
       break;
-    case 25:
+    case 28:
       mynum = 6;
       break;
   }
@@ -306,10 +329,16 @@ void myMillisEvents(bool isReset) {
   bool resp;
   resp = doHttpRequest(tmp);
   if (resp == true) {
-    Serial.println("Resetting Watchdog on 5minute success");
-    digitalWrite(53, HIGH);
-    delay(20);
-    digitalWrite(53, LOW);
+    if (DEBUG_WATCHDOG == false) {
+      Serial.println("Resetting Watchdog on 5minute success");
+      digitalWrite(48, HIGH);
+      delay(20);
+      digitalWrite(48, LOW);
+    } else {
+      Serial.println("");
+      Serial.println("                              Watchdog debugging in progress:  Expect reboots every 5 to 7 minutes!");
+      Serial.println("");
+    }
   } else {
     if (DEBUG) {
       Serial.println();
@@ -320,9 +349,9 @@ void myMillisEvents(bool isReset) {
   sendSensorState(18, digitalRead(18));
   sendSensorState(19, digitalRead(19));
   sendSensorState(22, digitalRead(22));
-  sendSensorState(23, digitalRead(23));
-  sendSensorState(24, digitalRead(24));
-  sendSensorState(25, digitalRead(25));
+  sendSensorState(24, digitalRead(25));
+  sendSensorState(26, digitalRead(26));
+  sendSensorState(28, digitalRead(28));
 
 }
 void serialSetup() {
@@ -396,6 +425,46 @@ void dhcpStuff() {
   }
 }
 
+void getMacAddressFromWeb() {
+  ethernetSetup();
+  Serial.println("Waiting for TCP...");
+  delay(2000);
+  int err = 0;
+  char tmp[] = "00:00:00:00:00:00";
+  char url[] = "/getMac.php?code=2SHD5USTa6Fv";
+  char hostname[] = "admin.rtmscloud.com";
+  const int kNetworkTimeout = 10 * 1000;
+  Serial.println(url);
+  HttpClient http(client);
+  err = http.get(hostname, url);
+  if( (err >= 0) && (DEBUG) ) {
+    Serial.println("started Request: OK");    
+  }
+  err = http.responseStatusCode();
+  if ( (err >= 0) && (DEBUG)) {
+    Serial.print("Received responseStatusCode = ");
+    Serial.println(err);
+  }
+  err = http.skipResponseHeaders();
+  if ( (err >= 0) && (DEBUG) ) {
+    Serial.println("Skipped Headers.");
+  }
+  int bodyLen = http.contentLength();
+  char c;
+  int count = 0;
+  unsigned long timeoutStart = millis();
+  while (http.available() && ((millis() - timeoutStart) < kNetworkTimeout)) {
+    c = http.read();
+    tmp[count] = c;
+    count++;
+  }
+  http.stop();
+  Serial.println(tmp);
+  File fh = SD.open("mac.txt",FILE_WRITE);
+  fh.write(tmp);
+  fh.close();
+  softReset();
+}
 void getAdjustmentFromWeb() {
   Serial.println("Waiting for TCP...");
   delay(2000);
@@ -439,7 +508,7 @@ void getAdjustmentFromWeb() {
       Serial.println();
       delay(100);
     }
-    softReset();
+    //softReset();
   }
   Serial.println("RMSCurrent Factor Read from WEB");
   Serial.print("RMSCurrent Factor Set to: ");
@@ -473,6 +542,10 @@ void readMacFromSD() {
     }
   } else {
     Serial.println("mac.txt doesn't exist.");
+    if(SD.exists("ready.txt")) {
+      Serial.println("Getting Mac Assignment from RTMSCLOUD.COM");
+      getMacAddressFromWeb();
+    }
   }
   Serial.print("MAC Address:  ");
   for (byte thisByte = 0; thisByte < 6; thisByte++) {

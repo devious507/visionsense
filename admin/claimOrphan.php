@@ -17,5 +17,6 @@ checkDBError($res,$sql);
 $sql="DELETE FROM orphans WHERE mac='{$mac}'";
 $res=$db->query($sql);
 checkDBError($res,$sql);
-header("Location: index.php");
+header("Location: http://my.rtmscloud.com/editBuilding.php?mac={$mac}");
+//header("Location: index.php");
 ?>
