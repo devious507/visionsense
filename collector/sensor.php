@@ -34,6 +34,8 @@ $res=$db->query($sql);
 checkDBError($res,$sql);
 $row=$res->fetchRow();
 if($row[0] == 0) {
+	$sql="UPDATE orphans SET tog{$_GET['sensor']}='{$_GET['value']}' WHERE mac='{$mac}'";
+	$res=$db->query($sql);
 	logError('mac',"Sensor Package not configured",$mac,$_SERVER['REMOTE_ADDR']);
 	exit();
 }
@@ -60,6 +62,7 @@ if($row[0] == 1) {
 	logError("System","Unable to Update values initial readings not present",$mac,$_SERVER['REMOTE_ADDR']);
 	exit();
 }
-
+if($row[0] == 0) {
+}
 
 ?>

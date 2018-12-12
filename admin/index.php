@@ -19,12 +19,16 @@ if($rows == 0) {
 	$orphanTable='';
 } else {
 	$orphanTable="<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
-	$orphanTable.="<tr><td colspan=\"2\" bgcolor=\"#cacaca\">Orphaned Sensor Packages</a></td></tr>";
+	$orphanTable.="<tr><td colspan=\"3\" bgcolor=\"#cacaca\">Orphaned Sensor Packages</a></td></tr>";
 	$orphanTable.="<tr><td bgcolor=\"#cacaca\">Sensor-ID</td>";
-	$orphanTable.="<td bgcolor=\"#cacaca\">Timestamp</td></tr>";
+	$orphanTable.="<td bgcolor=\"#cacaca\" colspan=\"2\">Timestamp</td></tr>";
 	while(($row=$res->fetchRow())==true) {
-		$link="<a href=\"claimOrphan.php?mac={$row[0]}\">{$row[0]}</a>";
-		$orphanTable.="<tr><td>{$link}</td><td>{$row[1]}</td></tr>";
+		$watcher="<a href=\"watchOrphan.php?mac={$row[0]}\"><img width=\"16\" height=\"16\" src=\"images/icons/refresh.png\"></a>";
+		$img="<img width=\"16\" height=\"16\" src=\"images/icons/delete-8x.png\">";
+		$deleteOrphan= "<a href=\"deleteOrphan.php?mac={$row[0]}\">{$img}</a>";
+		$link="<a href=\"claimOrphan.php?mac={$row[0]}\">{$row[0]}</a> {$deleteOrphan}";
+		$link2="<a href=\"http://my.rtmscloud.com/resetHistory.php?mac={$row[0]}\" target=\"top\">Reset Log</a>";
+		$orphanTable.="<tr><td>{$link}</td><td>{$row[1]} {$watcher}</td><td>{$link2}</td></tr>";
 	}
 	$orphanTable.="</table>\n";
 	$orphanTable.="<hr width=\"800\" align=\"left\">\n";

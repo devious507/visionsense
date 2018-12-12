@@ -54,6 +54,13 @@ if($row[0] == 0) {
 	$sql="INSERT INTO orphans VALUES ('{$mac}')";
 	$res=$db->query($sql);
 	logError('mac',"Sensor Package not configured",$mac,$_SERVER['REMOTE_ADDR']);
+	$myStuff=array('water','electric','temp1','temp2','temp3','temp4','temp5','temp6');
+	foreach($myStuff as $item) {
+		if(isset($_GET[$item])) {
+			$sql="UPDATE orphans SET {$item} = '{$_GET[$item]}' WHERE mac='{$mac}'";
+			$res=$db->query($sql);
+		}
+	}
 	exit();
 }
 $sql="SELECT temp1_adj,temp2_adj,temp3_adj,temp4_adj,temp5_adj,temp6_adj FROM sensor_setup WHERE mac='{$mac}'";

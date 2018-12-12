@@ -1,6 +1,6 @@
 // This sketch is designed for the 5v MEGA
-// complete with 2 interruptable intrusion sensors (18,19)
-// 4 standard intrusion sensors (loop processed) (22,24,26,28);
+// complete with 0 interruptable intrusion sensors (was 18,19)
+// 6 standard intrusion sensors (loop processed) (18,19,22,24,26,28);
 // (6 Total)
 //
 // electrical processing on A0 and A1
@@ -39,6 +39,7 @@
 #define SOCKET_DEBUG false
 #define DEBUG_WATCHDOG true
 #define DEBUG_INTERVAL 29000
+#define RMSCurrentFactorDefault 8.2377
 
 byte socketStat[MAX_SOCK_NUM];
 OneWire oneWire(ONE_WIRE_BUS);
@@ -71,6 +72,8 @@ int temperatures[6] = {0, 0, 0, 0, 0, 0};
 volatile int waterPulses = 0;
 double electric = 0;
 double RMSCurrentFactor = 8.2377;
+int pin18State;
+int pin19State;
 int pin22State;
 int pin24State;
 int pin26State;
@@ -83,12 +86,11 @@ void setup() {
   }
   serialSetup();            // Initialize Serial Port
   delay(1000);
-  if (DEBUG_WATCHDOG == false) {
-    Serial.println("Resetting Watchdog as part of boot process");
-    digitalWrite(48, HIGH);
-    delay(20);
-    digitalWrite(48, LOW);
-  } else {
+  Serial.println("Resetting Watchdog as part of boot process");
+  digitalWrite(48, HIGH);
+  delay(20);
+  digitalWrite(48, LOW);
+  if (DEBUG_WATCHDOG == true) {
     Serial.println("");
     Serial.println("                              Watchdog debugging in progress:  Expect reboots every 5 to 7 minutes!");
     Serial.println("");
@@ -111,13 +113,15 @@ void setup() {
   pinMode(24, INPUT);      // Poll Driven
   pinMode(26, INPUT);      // Poll Driven
   pinMode(28, INPUT);      // Poll Driven
+  pin18State = digitalRead(18);
+  pin19State = digitalRead(19);
   pin22State = digitalRead(22);
   pin24State = digitalRead(24);
   pin26State = digitalRead(26);
   pin28State = digitalRead(28);
   attachInterrupt(digitalPinToInterrupt(3), pin3ISR, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(18), pin18ISR, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(19), pin19ISR, CHANGE);
+  //attachInterrupt(digitalPinToInterrupt(18), pin18ISR, CHANGE);
+  //attachInterrupt(digitalPinToInterrupt(19), pin19ISR, CHANGE);
   myMillisEvents(true);
   Serial.println("Done with setup stuff:   Entering main processing loop");
   Serial.println("---------------------------------------------------------------");
@@ -136,7 +140,22 @@ void loop() {
     Serial.print("-------------------------------------------------");
     Serial.println(digitalRead(18));
   }
-  int myState = digitalRead(22);
+  int myState = digitalRead(18);
+  if ((myState != pin18State) && (millis() - pin18Millis >= PIN18DEBOUNCE)) {
+    pin18State = myState;
+    if (DEBUG)
+      Serial.println("pin 18 flipped");
+    sendSensorState(18, myState);
+  }
+  myState = digitalRead(19);
+  if ((myState != pin19State) && (millis() - pin19Millis >= PIN19DEBOUNCE)) {
+    pin19State = myState;
+    if (DEBUG)
+      Serial.println("pin 19 flipped");
+    sendSensorState(19, myState);
+  }
+  
+  myState = digitalRead(22);
   if ((myState != pin22State) && (millis() - pin22Millis >= PIN22DEBOUNCE)) {
     pin22State = myState;
     if (DEBUG)
@@ -253,6 +272,9 @@ void pin18ISR() {
   if (millis() - pin18Millis > PIN18DEBOUNCE) {
     sendSensorState(18, digitalRead(18));
     pin18Millis = millis();
+    if (DEBUG) {
+      Serial.println("PIN18 Tripped");
+    }
   }
 }
 void pin19ISR() {
@@ -260,7 +282,7 @@ void pin19ISR() {
     sendSensorState(19, digitalRead(19));
     pin19Millis = millis();
     if (DEBUG) {
-      Serial.println("PIN8 Tripped");
+      Serial.println("PIN19 Tripped");
     }
   }
 }
@@ -314,6 +336,7 @@ void myMillisEvents(bool isReset) {
   temperatures[4] = sensors.getTempFByIndex(4);
   temperatures[5] = sensors.getTempFByIndex(5);
   if (isReset) {
+    waterPulses = 0;
     sprintf(tmp, qsFormatR, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], waterPulses, (int)electric, temperatures[0], temperatures[1], temperatures[2], temperatures[3], temperatures[4], temperatures[5]);
   } else {
     sprintf(tmp, qsFormat, mac[0], mac[1], mac[2], mac[3], mac[4], mac[5], waterPulses, (int)electric, temperatures[0], temperatures[1], temperatures[2], temperatures[3], temperatures[4], temperatures[5]);
@@ -502,15 +525,16 @@ void getAdjustmentFromWeb() {
   http.stop();
   RMSCurrentFactor = atof(tmp);
   if (RMSCurrentFactor == 0) {
+    RMSCurrentFactor = RMSCurrentFactorDefault;
     if (DEBUG) {
-      Serial.println("Network read of RMSCurrentFactor failed... rebooting");
+      Serial.println("Network read of RMSCurrentFactor failed... using default");
       Serial.println();
       Serial.println();
       delay(100);
     }
-    //softReset();
+  } else {
+    Serial.println("RMSCurrent Factor Read from WEB");
   }
-  Serial.println("RMSCurrent Factor Read from WEB");
   Serial.print("RMSCurrent Factor Set to: ");
   Serial.println(RMSCurrentFactor, 6);
   Serial.println("---------------------");
@@ -520,7 +544,8 @@ void readMacFromSD() {
   if (SD.exists("mac.txt")) {
     Serial.println("mac.txt exists.");
     File datafile = SD.open("mac.txt");
-    char *c = "0x00";
+    //char *c = "0x00";
+    char c[] = "0x00";
     byte b1 = 0x02;
     byte b2;
     int n;
@@ -666,4 +691,3 @@ void softReset() {
     }
   }
 }
-
