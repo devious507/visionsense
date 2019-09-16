@@ -33,11 +33,11 @@
 #define PIN24DEBOUNCE 25
 #define PIN26DEBOUNCE 25
 #define PIN28DEBOUNCE 25
-#define DEBUG false
-#define DEBUG_POWER false
-#define DEBUG_WATER false
+#define DEBUG true
+#define DEBUG_POWER true
+#define DEBUG_WATER true
 #define SOCKET_DEBUG false
-#define DEBUG_WATCHDOG false
+#define DEBUG_WATCHDOG true
 #define DEBUG_INTERVAL 29000
 #define RMSCurrentFactorDefault 8.2377
 

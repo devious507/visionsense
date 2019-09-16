@@ -53,6 +53,10 @@ if($row[0] == 1) {
 		$value='true';
 	}
 	$sql="UPDATE sensor_current SET {$sensor}={$value}, lastip='{$_SERVER['REMOTE_ADDR']}', lastcontact=now() WHERE mac='{$mac}'";
+	if($sensor == 'tog4') {
+		logError('mac',$sql);
+	}
+	print $sql;
 	$res=$db->query($sql);
 	checkDBError($res,$sql);
 	$sql="INSERT INTO alarm_log (mac,{$sensor},lastip,lastcontact) VALUES ('{$mac}','{$value}','{$_SERVER['REMOTE_ADDR']}',now())";

@@ -36,17 +36,27 @@ $myLbls[]='IP';
 $myItems[]='lastcontact';
 $myLbls[]='TimeStamp';
 
-$sql="SELECT description FROM sensor_setup WHERE mac='{$mac}'";
+$sql="SELECT description,cm FROM sensor_setup WHERE mac='{$mac}'";
 $res=$db->query($sql);
 checkDBError($res,$sql);
 $row=$res->fetchRow();
 $description=$row[0];
+$raw_mac=$row[1];
 $d_colspan=count($myLbls);
 $time=date("H:i:s m/d/Y");
+$cm='';
+if(isset($_COOKIE['superadmin']) && $_COOKIE['superadmin'] == 't') {
+	$raw_mac=preg_replace("/:/","",$raw_mac);
+	$link_mac=substr($raw_mac,0,4).".".substr($raw_mac,4,4).".".substr($raw_mac,8,4);
+	if($raw_mac != '') {
+		$url="http://38.108.136.6/monitoring/modemHistory.php?mac={$raw_mac}";
+		$cm=" | Cable Modem: <a href=\"{$url}\">{$link_mac}</a>";
+	}
+}
 
 print pageHeader("Smart Building Detail",true,60,$d_colspan);
 print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">{$description} -- {$time}</td></tr>\n";
-print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$mac}</td></tr>\n";
+print "<tr><td bgcolor=\"#cacaca\" colspan=\"{$d_colspan}\">Sensor-ID: {$mac} {$cm}</td></tr>\n";
 print "<tr>\n";
 foreach($myLbls as $txt) {
 	print "\t<td align=\"center\">{$txt}</td>\n";
@@ -140,7 +150,7 @@ while(($row=$res->fetchRow())==true) {
 	if($end) {
 		print generateGraph($mac,$row[0],true)."</td></tr>\n";
 	} else {
-		print "<tr><td colspan=\"6\">".generateGraph($mac,$row[0],true)."</td><td colspan=\"5\">";
+		print "<tr><td colspan=\"8\">".generateGraph($mac,$row[0],true)."</td><td colspan=\"7\">";
 	}
 	if($end) {
 		$end=false;

@@ -20,6 +20,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 #include <utility/w5100.h>
+#include <avr/wdt.h>
 
 
 
@@ -33,11 +34,11 @@
 #define PIN24DEBOUNCE 25
 #define PIN26DEBOUNCE 25
 #define PIN28DEBOUNCE 25
-#define DEBUG false
-#define DEBUG_POWER false
-#define DEBUG_WATER false
+#define DEBUG true 
+#define DEBUG_POWER true
+#define DEBUG_WATER true
 #define SOCKET_DEBUG false
-#define DEBUG_WATCHDOG false
+#define DEBUG_WATCHDOG true
 #define DEBUG_INTERVAL 29000
 #define RMSCurrentFactorDefault 8.2377
 
@@ -125,6 +126,7 @@ void setup() {
   //attachInterrupt(digitalPinToInterrupt(18), pin18ISR, CHANGE);
   //attachInterrupt(digitalPinToInterrupt(19), pin19ISR, CHANGE);
   myMillisEvents(true);
+  wdt_enable(WDTO_8S);
   Serial.println("Done with setup stuff:   Entering main processing loop");
   Serial.println("---------------------------------------------------------------");
 }
@@ -188,6 +190,7 @@ void loop() {
   if (SOCKET_DEBUG) {
     ShowSockStatus();
   }
+    wdt_reset();
 }
 
 void sdSetup() {

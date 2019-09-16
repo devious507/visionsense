@@ -28,6 +28,7 @@ $mac=$_POST['mac'];
 unset($_POST['mac']);
 foreach($_POST as $k=>$v) {
 	switch($k) {
+	case "cm":
 	case "description":
 	case "temp1_lbl":
 	case "temp2_lbl":

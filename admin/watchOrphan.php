@@ -12,7 +12,7 @@ $mac=$_GET['mac'];
 $sql="select count(*) from reset_log WHERE mac='{$mac}'";
 $res=$db->query($sql);
 $row=$res->fetchRow();
-$arr[0]="<td>".$row[0]."</td>";
+$arr[0]="<td align=\"center\"><a target=\"logger\" href=\"http://my.rtmscloud.com/resetHistory.php?mac={$mac}\">{$row[0]}</a></td>";
 $sql="SELECT tstamp,water,electric,temp1,temp2,temp3,temp4,temp5,temp6,tog1,tog2,tog3,tog4,tog5,tog6 FROM orphans WHERE mac='{$mac}'";
 $res=$db->query($sql);
 $row=$res->fetchRow();

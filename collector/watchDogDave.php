@@ -1,5 +1,6 @@
 <?php
 
+exit();
 require_once("project.php");
 define("ALERT_AGE",300);
 define("FILE_AGE",3600);

@@ -5,12 +5,11 @@
 
 $macs=array('abcd.abcd.abcd',
 	"abcd.abcd.0500",
-	"abcd.abcd.0501",
-	"abcd.abcd.0502",
-	"abcd.abcd.0503",
-	"abcd.abcd.0504"
+	"abcd.abcd.0508",
+	"abcd.abcd.0509",
+	"abcd.abcd.0510",
+	"abcd.abcd.0511",
+	"abcd.abcd.0512",
+	"abcd.abcd.0513"
 	);
-for($i=505; $i<=513; $i++) {
-	$macs[]='abcd.abcd.0'.$i;
-}
 ?>

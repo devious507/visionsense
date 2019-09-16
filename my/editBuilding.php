@@ -32,9 +32,11 @@ if($_COOKIE['superadmin'] == 't') {
 		$ownerSel.="<option value=\"{$row2[0]}\"{$selected}>{$row2[1]} | {$row2[2]}</option>";
 	}
 	$ownerSel.="</option></td></tr>";
+	$cmMacEntry="<tr><td>Cm Mac</td><td><input type=\"text\" size=\"12\" name=\"cm\" value=\"{$row['cm']}\"></td></tr>";
 }
 unset($row['mac']);
 unset($row['owner']);
+unset($row['cm']);
 
 ob_start(); var_dump($row); $debug="<pre>".ob_get_contents()."</pre>"; ob_end_clean();
 
@@ -43,6 +45,7 @@ $hidden="<input type=\"hidden\" name=\"mac\" value=\"{$mac}\">\n";
 $table="<tr><td bgcolor=\"#cacaca\" colspan=\"5\"><b>Sensor-ID:</b> {$mac}</td></tr>\n";
 $table.="<tr><td bgcolor=\"#cacaca\" colspan=\"5\"><a href=\"sensorDetail.php?mac={$mac}\">Back</a> || <a href=\"graphManagement.php?mac={$mac}\">Graphs</a> || <a href=\"emailAlerts.php?mac={$mac}\">Emails</a></td></tr>\n";
 if($_COOKIE['superadmin'] == 't') {
+	$table.=$cmMacEntry;
 	$table.=$ownerSel;
 }
 $table.="<tr><td>Address</td><td colspan=\"4\"><input type=\"text\" name=\"description\" value=\"{$row['description']}\" size=\"25\"></td></tr>\n";
@@ -62,8 +65,9 @@ for($i=1; $i<=6; $i++) {
 	$min=$row['temp'.$i.'_min'];
 	$max=$row['temp'.$i.'_max'];
 	$adj=$row['temp'.$i.'_adj'];
-	// Limit temp sensors to 2 for now
-	$table.="<tr><td>Temp {$i}</td><td><input type=\"text=\" size=\"{$s}\" name=\"temp{$i}_min\" value=\"{$min}\"></td><td><input type=\"text\" size=\"{$s}\" name=\"temp{$i}_max\" value=\"{$max}\"></td><td><input type=\"text\" size=\"{$ss}\" name=\"temp{$i}_lbl\" value=\"{$lbl}\"></td><td><input type=\"text\" size=\"{$s}\" name=\"temp{$i}_adj\" value=\"{$adj}\"></td></tr>\n";
+	$selector=tempSelector($lbl,"temp{$i}_lbl");
+	//$table.="<tr><td>Temp {$i}</td><td><input type=\"text=\" size=\"{$s}\" name=\"temp{$i}_min\" value=\"{$min}\"></td><td><input type=\"text\" size=\"{$s}\" name=\"temp{$i}_max\" value=\"{$max}\"></td><td><input type=\"text\" size=\"{$ss}\" name=\"temp{$i}_lbl\" value=\"{$lbl}\"></td><td><input type=\"text\" size=\"{$s}\" name=\"temp{$i}_adj\" value=\"{$adj}\"></td></tr>\n";
+	$table.="<tr><td>Temp {$i}</td><td><input type=\"text=\" size=\"{$s}\" name=\"temp{$i}_min\" value=\"{$min}\"></td><td><input type=\"text\" size=\"{$s}\" name=\"temp{$i}_max\" value=\"{$max}\"></td><td>{$selector}</td><td><input type=\"text\" size=\"{$s}\" name=\"temp{$i}_adj\" value=\"{$adj}\"></td></tr>\n";
 }
 for($i=1; $i<=6; $i++) {
 	$lbl="Int. {$i}";
@@ -84,6 +88,21 @@ if(DEBUG) {
 } 
 
 print pageHeader("Edit Building",false,0,5,400);
+
+function tempSelector($currentValue,$name) {
+	$values=array("","Supply","Return","Supply2","Return2","Hot Water","Room","z1","z2","z3","z4","z5","z6");
+	$rv="<select name=\"{$name}\">";
+	foreach($values as $v) {
+		if($v == $currentValue) {
+			$sel="selected=\"selected\"";
+		} else {
+			$sel="";
+		}
+		$rv.="<option value=\"{$v}\" {$sel}>{$v}</option>";
+	}
+	$rv.="</select>";
+	return $rv;
+}
 ?>
 <form method="post" action="editBuildingAction.php">
 <?php echo $hidden; ?>

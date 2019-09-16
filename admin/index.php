@@ -1,11 +1,13 @@
 <?php
 
 require_once("project.php");
+require_once("displayMatrix.php"); // for Configured Sensors List
 require_once("security.php");
 require_once("adminSecurity.php");
 
 $linkTable="<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
 $linkTable.="<tr><td bgcolor=\"#cacaca\">Links</a></td></tr>";
+$linkTable.="<tr><td><a href=\"sensorList.php\">Sensor List (Admin)</a></td></tr>\n";
 $linkTable.="<tr><td><a href=\"userManager.php\">User Manager</a></td></tr>\n";
 $linkTable.="<tr><td><a href=\"http://my.rtmscloud.com/\">Client Site</a></td></tr>\n";
 $linkTable.="<tr><td><a href=\"logout.php\">Logout</a></td></tr>\n";
@@ -34,10 +36,19 @@ if($rows == 0) {
 	$orphanTable.="<hr width=\"800\" align=\"left\">\n";
 }
 
+/*
+$bg="bgcolor=\"#cacaca\"";
 $sensorTable="<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
-$sensorTable.="<tr><td colspan=\"4\" bgcolor=\"#cacaca\">Configured Sensors</td></tr>";
-$sensorTable.="<tr><td bgcolor=\"#cacaca\">OwnerID</td><td bgcolor=\"#cacaca\">Sensor-ID</td><td bgcolor=\"#cacaca\">Description</td><td bgcolor=\"#cacaca\">Email</td></tr>";
+$sensorTable.="<tr><td colspan=\"11\" {$bg}>Configured Sensors</td></tr>";
+$sensorTable.="<tr><td {$bg}>MAC</td><td {$bg}>Owner</td><td {$bg}>Description</td><td {$bg}>Water</td><td {$bg}>Electric</td><td {$bg}>Supply</td><td {$bg}>Return</td><td {$bg}>Supply2</td><td {$bg}>Return2</td><td {$bg}>H20</td><td {$bg}>Room</td></tr>";
+$sql="SELECT mac FROM sensor_setup ORDER BY description";
+$res=$db->query($sql);
+checkDBError($res);
+while(($row=$res->fetchRow())==true) {
+	$sensorTable.=getRow($row[0]);
+}
 
+/*
 $sql="SELECT s.mac,s.description,u.email,s.owner FROM sensor_setup AS s LEFT OUTER JOIN users AS u ON s.owner=u.userid ORDER BY s.description,s.mac";
 $res=$db->query($sql);
 checkDBError($res,$sql);
@@ -51,6 +62,7 @@ while(($row=$res->fetchRow())==true) {
 
 $sensorTable.="</table>\n";
 $sensorTable.="<hr width=\"800\" align=\"left\">\n";
+ */
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,7 +71,6 @@ $sensorTable.="<hr width=\"800\" align=\"left\">\n";
 </head>
 <body>
 <?php echo $orphanTable; ?>
-<?php echo $sensorTable; ?>
 <?php echo $linkTable; ?>
 </body>
 </html>

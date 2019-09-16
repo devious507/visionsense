@@ -1,7 +1,7 @@
 <?php
 
 require_once("MDB2.php");
-define("DEBUG",true);
+define("DEBUG",false);
 define("RRDTOOL","/usr/bin/rrdtool");
 define("ERRORFILE","data/ERRORS");
 define("LOGFILE","data/LOG");
@@ -13,7 +13,103 @@ define("GRAPHDIR","data");
 define("PATH","/");
 define("DOMAIN","rtmscloud.com");
 
+
+function getSensorCells($s) {
+	$current=getCurrent($s['mac']);
+	$current['water']=sprintf("%.1f",$current['water']/$s['clickspergal']);
+	if($current['age'] >= 600) {
+		$macBG=" bgcolor=\"".REDHILIGHT."\"";
+	} else {
+		$macBG="";
+	}
+	$cells[0]="<td{$macBG}><a href=\"http://my.rtmscloud.com/sensorDetail.php?mac={$s['mac']}\">".$s['description']."</a></td>";
+	// Water
+	$bg=minMaxColor($s['water_min'],$s['water_max'],$current['water']);
+	$cells[1]="<td{$bg} align=\"center\">{$current['water']}</td>";
+	// Electric
+	$bg=minMaxColor($s['electric_min'],$s['electric_max'],$current['electric']);
+	$cells[2]="<td{$bg} align=\"center\">{$current['electric']}</td>";
+	// Boiler 1 Supply
+	$cells[3]=findTempField($current,$s,'Supply');
+	// Boiler 1 Return
+	$cells[4]=findTempField($current,$s,'Return');
+	// Boilder 2 Supply
+	$cells[5]=findTempField($current,$s,'Supply2');
+	// Boiler 2 Return
+	$cells[6]=findTempField($current,$s,'Return2');
+	// Room Temp
+	$cells[7]=findTempField($current,$s,'Room');
+	// Hot Water
+	$cells[8]=findTempField($current,$s,'Hot Water');
+	// Lockout1
+	$cells[9]=findToggleField($current,$s,"Lockout");
+	// Lockout2
+	$cells[10]=findToggleField($current,$s,"Lockout2");
+	// Boiler Room
+	$cells[11]=findToggleField($current,$s,"Boiler Rm");
+	// Distro Room
+	$cells[12]=findToggleField($current,$s,"Distro Rm");
+	// Tamper
+	$cells[13]=findToggleField($current,$s,"Tamper");
+	//debugDumper($s);
+	//debugDumper($current);
+	return $cells;
+}
+
+function findToggleField($current,$s,$myField) {
+	$field="";
+	foreach($s as $k=>$v) {
+		if($v == $myField) {
+			$field=preg_replace("/_lbl/","",$k);
+		}
+	}
+	if($s[$field] != $current[$field]) {
+		$bg=" bgcolor=\"".REDHILIGHT."\"";
+		$txt="ERR";
+	} else {
+		$bg=" bgcolor=\"".STANDARDHILIGHT."\"";
+		$txt="OK";
+	}
+	if($field != "") {
+		//return "<td{$bg} align=\"center\">{$field} {$s[$field]} -- {$current[$field]}</td>";
+		return "<td{$bg} align=\"center\">{$txt}</td>";
+	} else {
+		return "<td>&nbsp;</td>";
+	}
+}
+function findTempField($current,$s,$myField) {
+	$field="";
+	foreach($s as $k=>$v) {
+		if($v == $myField) {
+			$field=preg_replace("/_lbl/","",$k);
+		}
+	}
+	$bg=minMaxColor($s[$field."_min"],$s[$field."_max"],$current[$field]);
+	$return="<td{$bg} align=\"center\">{$current[$field]}&deg;</td>";
+	if($field != "") {
+		return $return;
+	} else {
+		return "<td>&nbsp;</td>";
+	}
+}
+function minMaxColor($min,$max,$val) {
+	if(($val < $min) || ($val>$max)) {
+		return " bgcolor=\"".REDHILIGHT."\"";
+	} else {
+		return " bgcolor=\"".STANDARDHILIGHT."\"";
+	}
+}
+function getCurrent($mac) {
+	$sql="SELECT *,cast(extract(epoch from now()-lastcontact) as integer) as age FROM sensor_current WHERE mac='{$mac}'";
+	$db=connectDB();
+	$res=$db->query($sql);
+	checkDBError($res);
+	$row=$res->fetchRow(MDB2_FETCHMODE_ASSOC);
+	return $row;
+}
+
 function pageHeader($title="VisionSense",$table=false,$refresh=0,$cols=100,$width=0,$ss='') {
+	$w='';
 	if($width >0) {
 		$w=" width=\"{$width}\" ";
 	}
@@ -28,11 +124,15 @@ function pageHeader($title="VisionSense",$table=false,$refresh=0,$cols=100,$widt
 	}
 	$rv.="<title>{$title}</title></head>\n";
 	$rv.="<body>";
+	$href="index.php";
+	if(isset($_COOKIE['superadmin']) && $_COOKIE['superadmin'] == 't') {
+		$href="http://admin.rtmscloud.com/sensorList.php";
+	}
 	if($table == true) {
 		$rv.="<table cellpadding=\"5\" cellspacing=\"0\" border=\"1\">";
-		$rv.="<tr>\n\t<td bgcolor=\"#cacaca\" colspan=\"{$cols}\"><a href=\"index.php\">{$logo}</a></td>\n</tr>\n";
+		$rv.="<tr>\n\t<td bgcolor=\"#cacaca\" colspan=\"{$cols}\"><a href=\"{$href}\">{$logo}</a></td>\n</tr>\n";
 	} else {
-		$rv.="<a href=\"index.php\">{$logo}</a>";
+		$rv.="<a href=\"{$href}\">{$logo}</a>";
 	}
 	return $rv;
 }
@@ -455,8 +555,9 @@ function debugDumper($a) {
 }
 
 function sendSMS($destination, $message) {
-	$authID='MAYTMXZTQXODJLMGNLZG';
-	$authToken='OTEzN2IyNDg2YTkzMmU5MjdiYzQwNDQ0Y2FmMzVm';
+	require_once("auth.php");
+	$authID=AUTHID;
+	$authToken=AUTHTOKEN;
 	$postVars = json_encode(array('src'=>'15152985930',
 		'dst'=>$destination,
 		'text'=>$message,

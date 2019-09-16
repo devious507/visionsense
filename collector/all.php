@@ -151,6 +151,11 @@ if($row[0] == 1) {
 	foreach($_GET as $k=>$v) {
 		$left[]=$k;
 		switch($k) {
+			// initial insert values need water and electric = 0
+		case "water":
+		case "electric":
+			$right[]=0;
+			break;
 		case "mac":
 		case "lastcontact":
 		case "lastip":
